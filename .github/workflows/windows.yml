@@ -34,3 +34,11 @@ jobs:
       - run: bun run check
       - run: bun test
       - run: bun scripts/battlecraft.ts headless
+      - name: The map from a synthetic base map
+        env:
+          MAP_PACK: build/tools/map-pack
+        run: |
+          bun node_modules/wisp/host/toolchain/syntheticBaseMap.ts "$MAP_PACK" "$RUNNER_TEMP/base.w3x"
+          bun scripts/battlecraft.ts map build --base "$RUNNER_TEMP/base.w3x" --out "$RUNNER_TEMP/battlecraft.w3x"
+          "$MAP_PACK" extract "$RUNNER_TEMP/battlecraft.w3x" "$RUNNER_TEMP/war3map.lua"
+          grep -q 'wispTs.start' "$RUNNER_TEMP/war3map.lua"

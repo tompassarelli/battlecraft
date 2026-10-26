@@ -131,7 +131,7 @@ at least 2048 by 1536 around its center, the arena's size. A base saved once
 can be reused without opening World Editor again. Keep base maps, built maps
 and any game files out of this repository. On first use the build compiles
 Wisp's map packager, which needs `nix` (or `STORMLIB_PREFIX` and `CC`); see
-Wisp's [editor-free guide](https://github.com/tompassarelli/wisp/blob/7259317eaec3bc1a60404fa7efbfe5e401b20f61/docs/editor-free.md).
+Wisp's [editor-free guide](https://github.com/tompassarelli/wisp/blob/a2b906596c689bd08b5c54fb4ad783fd509b3616/docs/editor-free.md).
 
 ## Wisp version
 
