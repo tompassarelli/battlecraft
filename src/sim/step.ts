@@ -87,12 +87,12 @@ function fly(state: SimState): SimState {
       if (!circlesOverlap(projectile.x, projectile.y, projectile.radius, champion.x, champion.y, kind.radius)) continue;
       const health = champion.health - projectile.damage;
       champions[id] = { ...champion, health: health > 0 ? health : kind.health };
-      hit = { target: champion.id, damage: projectile.damage, x: champion.x, y: champion.y };
+      hit = { target: champion.id, projectile: projectile.id, damage: projectile.damage, x: champion.x, y: champion.y };
     }
     if (hit === undefined && circlesOverlap(projectile.x, projectile.y, projectile.radius, dummy.x, dummy.y, dummy.radius)) {
       const health = dummy.health - projectile.damage;
       dummy = { ...dummy, health: health > 0 ? health : dummy.maxHealth };
-      hit = { target: DUMMY, damage: projectile.damage, x: dummy.x, y: dummy.y };
+      hit = { target: DUMMY, projectile: projectile.id, damage: projectile.damage, x: dummy.x, y: dummy.y };
     }
     if (hit !== undefined) hits.push(hit);
     else if (projectile.remaining > 0) projectiles.push(projectile);

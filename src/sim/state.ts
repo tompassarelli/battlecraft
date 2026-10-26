@@ -41,6 +41,7 @@ export interface Dummy {
 
 export interface Hit {
   readonly target: number;
+  readonly projectile: number;
   readonly damage: number;
   readonly x: number;
   readonly y: number;

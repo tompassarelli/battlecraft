@@ -29,7 +29,7 @@ export function checksum(state: SimState): string {
   add(dummy.x); add(dummy.y); add(dummy.radius); add(dummy.health); add(dummy.maxHealth);
   add(state.hits.length);
   for (const hit of state.hits) {
-    add(hit.target); add(hit.damage); add(hit.x); add(hit.y);
+    add(hit.target); add(hit.projectile); add(hit.damage); add(hit.x); add(hit.y);
   }
   return `${first}:${second}`;
 }

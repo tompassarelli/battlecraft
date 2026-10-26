@@ -3,6 +3,8 @@ import { join } from "node:path";
 import { mapCompiler, report } from "wisp/scripts/compiler";
 import { registeredTests } from "wisp/src/runtime/testing";
 import "../src/sim/hit.tests";
+import "../src/inputCodec.tests";
+import "../src/rollback.tests";
 
 for (const { name, run } of registeredTests) test(name, run);
 

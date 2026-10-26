@@ -13,7 +13,7 @@
     "rootDir": ".",
     "outDir": "build/headless"
   },
-  "include": ["test/headless-lua.ts"],
+  "include": ["test/headless-lua.ts", "node_modules/wisp/src/natives/warcraft.d.ts"],
   "tstl": {
     "luaTarget": "5.3",
     "luaBundle": "headless.lua",

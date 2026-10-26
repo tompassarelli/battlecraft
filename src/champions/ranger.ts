@@ -2,11 +2,9 @@ import { SCALE, perFrame } from "../sim/fixed";
 import type { ChampionKind } from "./champion";
 import { skillshot } from "./skillshot";
 
-const RIFLEMAN = 0x68726966;
-
 export const ranger: ChampionKind = {
   name: "Ranger",
-  unitType: RIFLEMAN,
+  model: "units\\human\\Rifleman\\Rifleman.mdl",
   radius: 32 * SCALE,
   moveSpeed: perFrame(300),
   health: 200,
