@@ -5,6 +5,8 @@ export const BATTLECRAFT_MAP = {
   filePrefix: "battlecraft", globalPrefixes: ["__battlecraft"],
   natives: () => ({ GetRectCenterX: () => 0, GetRectCenterY: () => 0 }),
   intentionalNoops: {
+    FogEnable: "visibility only; the simulation never reads it",
+    FogMaskEnable: "visibility only; the simulation never reads it",
     TriggerRegisterPlayerEvent: "Wisp's headless runtime has no synchronized mouse events yet, so this journey aims at the starting aim point, the arena center",
   },
 };

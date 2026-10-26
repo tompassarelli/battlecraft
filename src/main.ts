@@ -76,6 +76,9 @@ export function start(this: void): void {
   for (let player = 0; player < PLAYERS; player++) inputs.push({ held: 0, pressed: 0, aimX: 0, aimY: 0, castAimX: 0, castAimY: 0 });
   const display = createDisplay(sim, GetRectCenterX(bj_mapInitialPlayableArea), GetRectCenterY(bj_mapInitialPlayableArea));
   globalThis.__battlecraftMatch = { sim, inputs, display };
+  FogEnable(false);
+  FogMaskEnable(false);
+  SetCameraPosition(display.centerX, display.centerY);
   const down = CreateTrigger();
   const up = CreateTrigger();
   const mouse = CreateTrigger();
