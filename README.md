@@ -5,6 +5,11 @@ Warcraft III, built on [Wisp](https://github.com/tompassarelli/wisp) and the
 input and rollback lessons from
 [Smashcraft](https://github.com/tompassarelli/smashcraft).
 
+New to Warcraft III maps and on Windows? Start with
+[Getting started on Windows](docs/getting-started-windows.md): it takes you
+from installing Git and Bun to playing the map, hot-reloading your changes
+into the running game and adding a champion of your own.
+
 Two players each control a champion in a walled arena: WASD moves, the mouse
 aims, Q fires a skillshot at the aim point. The map also runs alone: a slot
 with no human in it, or a player who leaves, keeps a champion that stands
@@ -29,6 +34,12 @@ bun scripts/battlecraft.ts headless    # the headless journey on its own
 The first `bun test` builds Lua 5.3.6 with 32-bit numbers, as Warcraft runs
 it, into Wisp's cache; it needs a C compiler, except on Windows, where Wisp
 ships it prebuilt. Set `LUA` to use one you built.
+
+`bun scripts/battlecraft.ts dev` keeps these warm and answers every save with
+the saved files' type errors, the affected tests and the headless journey;
+with `--data CUSTOM_MAP_DATA_DIR` each save also hot-reloads into a running
+game, and `--since REF` answers once for everything changed since REF and
+exits ([Wisp's dev loop](https://github.com/tompassarelli/wisp/blob/a2b906596c689bd08b5c54fb4ad783fd509b3616/docs/dev.md)).
 
 The Windows workflow (`.github/workflows/windows.yml`) is the gate for a
 Windows machine with only Bun and Git: on `windows-latest`, with gcc, make and
@@ -59,7 +70,7 @@ alone keeps playing.
 | `src/display.ts` | Draws the predicted state with stock Warcraft effects and floating text made at startup. It never reads the game back. |
 | `src/main.ts` | The map entry: `start()` creates everything once, `install()` registers handlers and runs again after each hot reload. |
 | `test/` | The hit-rule test and the headless journey. |
-| `scripts/battlecraft.ts` | Commands: `map build`, `map rebuild`, `hot`, `fresh`, `client`, `headless`. |
+| `scripts/battlecraft.ts` | Commands: `map build`, `map rebuild`, `dev`, `hot`, `fresh`, `client`, `headless`. |
 
 ## Input and netcode
 
@@ -129,8 +140,9 @@ Lua as its script language. It supplies the terrain, size and camera bounds;
 the build replaces its script, players and forces. Its playable area should be
 at least 2048 by 1536 around its center, the arena's size. A base saved once
 can be reused without opening World Editor again. Keep base maps, built maps
-and any game files out of this repository. On first use the build compiles
-Wisp's map packager, which needs `nix` (or `STORMLIB_PREFIX` and `CC`); see
+and any game files out of this repository. On Windows Wisp ships its map packager
+prebuilt. Elsewhere the build compiles it on first use, which needs `nix` (or
+`STORMLIB_PREFIX` and `CC`); see
 Wisp's [editor-free guide](https://github.com/tompassarelli/wisp/blob/a2b906596c689bd08b5c54fb4ad783fd509b3616/docs/editor-free.md).
 
 ## Wisp version

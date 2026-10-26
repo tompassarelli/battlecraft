@@ -71,14 +71,34 @@ runMainCli("bun scripts/battlecraft.ts", {
   hot: { usage: "--data DIR [--data DIR ...] [--watch]", load: async () => makeHot({ project, sourceDirectory, sourceMapDirectory, filePrefix }) },
   fresh: { usage: "MAP.w3x [--rebuild] [--map-folder Maps/00-Wisp]   (WISP_CLIENTS=clients.json)", load: async () => fresh },
   client: { usage: "look|read|click|keys|chat CLIENT ... | watch [CLIENT...] [--once] [--json] | wait CLIENT STATE... [--seconds N]   [--clients-file FILE]", load: async () => makeClient(clientsFile, { filePrefix }) },
+  dev: {
+    usage: "[--data DIR ...] | --since REF",
+    load: async () => {
+      const { makeDev } = await import("wisp/scripts/wisp/commands/dev");
+      const compiledSources = ["src/**/*.ts", "tsconfig.map.json"];
+      return makeDev({
+        root,
+        sources: ["src", "scripts", "test"],
+        typeCheck: { projects: ["tsconfig.json", "tsconfig.map.json", "tsconfig.tests.json", "tsconfig.headless.json"], command: [process.execPath, "run", "check"] },
+        tests: {
+          files: ["test/**/*.test.ts"],
+          preload: ["test/lua32.preload.ts"],
+          reads: {
+            "test/hit.test.ts": [...compiledSources, "test/lua.ts", "tsconfig.tests.json"],
+            "test/headless.test.ts": [...compiledSources, "test/headless-lua.ts", "test/journey.ts", "tsconfig.headless.json"],
+          },
+          journeys: ["test/headless.test.ts"],
+        },
+        journey: { module: "scripts/headless.ts", export: "BATTLECRAFT_HEADLESS", name: "arena" },
+        hot: { project, sourceDirectory, sourceMapDirectory, filePrefix },
+      });
+    },
+  },
   headless: {
     usage: "[arena] [--clients N] [--step N] [--runs N] [--json]",
     load: async () => {
       const { makeHeadless } = await import("wisp/scripts/wisp/commands/headless");
-      return makeHeadless(async () => {
-        const { ARENA_JOURNEY, BATTLECRAFT_MAP } = await import("../test/journey");
-        return { map: BATTLECRAFT_MAP, entry: join(sourceDirectory, "main.ts"), journeys: { arena: ARENA_JOURNEY } };
-      });
+      return makeHeadless(async () => (await import("./headless")).BATTLECRAFT_HEADLESS);
     },
   },
 }, process.argv.slice(2));
