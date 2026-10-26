@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": [
+      "ESNext"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "types": [
+      "bun",
+      "lua-types/5.3"
+    ],
+    "paths": {
+      "wisp/src/*": [
+        "./node_modules/wisp/src/*"
+      ]
+    }
+  },
+  "include": [
+    "scripts/**/*.ts",
+    "test/**/*.test.ts",
+    "test/*.preload.ts",
+    "node_modules/wisp/src/natives/warcraft.d.ts"
+  ]
+}

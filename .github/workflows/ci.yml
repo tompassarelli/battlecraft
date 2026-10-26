@@ -1,0 +1,11 @@
+name: CI
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  wisp:
+    uses: tompassarelli/wisp/.github/workflows/consumer.yml@24ce98b6feca1b4059501508177a3783ef9c768d
+    with:
+      bun-version: 1.3.13
+      wisp-ref: 24ce98b6feca1b4059501508177a3783ef9c768d
+      headless: bun scripts/battlecraft.ts headless
