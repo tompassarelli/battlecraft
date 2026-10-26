@@ -1,6 +1,7 @@
 import { configureRuntime } from "wisp/src/runtime/config";
 import { at } from "wisp/src/runtime/lookup";
 import { installDispatch, on, trampoline } from "wisp/src/map/dispatch";
+import { writeLine } from "wisp/src/map/fileio";
 import { installHotReload, startHotReload } from "wisp/src/map/hotReload";
 import { f32 } from "wisp/src/sim/f32";
 import { type Display, createDisplay, draw, noticeHits } from "./display";
@@ -24,6 +25,7 @@ export interface Match {
   readonly idle: InputRow;
   readonly display: Display;
   readonly dummyHits: number[];
+  aimProbe: boolean;
 }
 
 declare global {
@@ -95,12 +97,23 @@ function mouseMoved(): void {
   // Warcraft reports the pointer at (0, 0) while it is over the interface.
   if (x === 0 && y === 0) return;
   const current = match();
-  aimAt(at(current.inputs, GetPlayerId(GetTriggerPlayer())), x, y, current.display.centerX, current.display.centerY);
+  const player = GetPlayerId(GetTriggerPlayer());
+  aimAt(at(current.inputs, player), x, y, current.display.centerX, current.display.centerY);
+  if (!current.aimProbe) return;
+  current.aimProbe = false;
+  writeLine(`battlecraft-aim-p${current.session.local}.txt`, `player ${player} callback ${current.session.callbacks} aim ${x} ${y}`);
+}
+
+function armAimProbe(): void {
+  match().aimProbe = true;
 }
 
 function showChecksum(): void {
-  const session = match().session;
-  DisplayTextToForce(GetPlayersAll(), `frame ${session.confirmedFrame} checksum ${checksum(session.confirmed)}`);
+  const current = match();
+  const session = current.session;
+  const line = `frame ${session.confirmedFrame} checksum ${checksum(session.confirmed)} dummy hits ${current.dummyHits.join(" ")}`;
+  DisplayTextToForce(GetPlayersAll(), line);
+  writeLine(`battlecraft-checksum-p${session.local}.txt`, line);
 }
 
 export function install(this: void): void {
@@ -112,6 +125,7 @@ export function install(this: void): void {
   on("battlecraft.keyDown", pressed);
   on("battlecraft.mouse", mouseMoved);
   on("battlecraft.checksum", showChecksum);
+  on("battlecraft.aimProbe", armAimProbe);
   installHotReload();
 }
 
@@ -128,11 +142,12 @@ export function start(this: void): void {
   for (let player = 0; player < PLAYERS; player++) if (!playing(player)) leave(session, BATTLECRAFT_NET, player);
   const moveKeys = MOVE_KEYS.map(([key]) => ConvertOsKeyType(key));
   const abilityKeys = ABILITY_KEYS.map((key) => ConvertOsKeyType(key));
-  globalThis.__battlecraftMatch = { session, inputs, moveKeys, abilityKeys, idle: inputRow(), display, dummyHits: [] };
+  globalThis.__battlecraftMatch = { session, inputs, moveKeys, abilityKeys, idle: inputRow(), display, dummyHits: [], aimProbe: false };
   const sync = CreateTrigger();
   const down = CreateTrigger();
   const mouse = CreateTrigger();
   const chat = CreateTrigger();
+  const probe = CreateTrigger();
   const leaving = CreateTrigger();
   for (let player = 0; player < PLAYERS; player++) {
     BlzTriggerRegisterPlayerSyncEvent(sync, Player(player), INPUT_PREFIX, false);
@@ -141,12 +156,14 @@ export function start(this: void): void {
     }
     TriggerRegisterPlayerEvent(mouse, Player(player), EVENT_PLAYER_MOUSE_MOVE);
     TriggerRegisterPlayerChatEvent(chat, Player(player), "-checksum", true);
+    TriggerRegisterPlayerChatEvent(probe, Player(player), "-aimprobe", true);
     TriggerRegisterPlayerEvent(leaving, Player(player), EVENT_PLAYER_LEAVE);
   }
   TriggerAddAction(sync, trampoline("battlecraft.sync"));
   TriggerAddAction(down, trampoline("battlecraft.keyDown"));
   TriggerAddAction(mouse, trampoline("battlecraft.mouse"));
   TriggerAddAction(chat, trampoline("battlecraft.checksum"));
+  TriggerAddAction(probe, trampoline("battlecraft.aimProbe"));
   TriggerAddAction(leaving, trampoline("battlecraft.leave"));
   TimerStart(CreateTimer(), f32(1 / 60), true, trampoline("battlecraft.frame"));
   startHotReload();

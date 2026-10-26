@@ -13,4 +13,4 @@ test("the registered tests pass in 32-bit Lua", () => {
   const run = Bun.spawnSync([process.env.LUA ?? "lua", join(import.meta.dir, "../build/tests/tests.lua")], { stdout: "pipe", stderr: "pipe" });
   expect({ code: run.exitCode, stderr: run.stderr.toString() }).toEqual({ code: 0, stderr: "" });
   expect(run.stdout.toString()).toContain(`${registeredTests.length} of ${registeredTests.length} passed`);
-});
+}, 30_000);

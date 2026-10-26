@@ -61,7 +61,9 @@ test("under instant, Battle.net and turn-burst delivery both clients move, cast 
       expect(new Set(current.display.shownHits).size).toBe(4);
       const labels = client.textTags.poses().map(({ text }) => text);
       expect(labels).toContain("Training dummy 100/100");
-      expect(client.messages).toEqual(["hot reload 1 applied", `frame ${session.confirmedFrame} checksum ${checksum(session.confirmed)}`]);
+      const shown = `frame ${session.confirmedFrame} checksum ${checksum(session.confirmed)} dummy hits 90 96 160 166`;
+      expect(client.messages).toEqual(["hot reload 1 applied", shown]);
+      expect(client.files.get(`battlecraft-checksum-p${client.slot}.txt`)).toEqual([shown]);
     }
     const [first, second] = matches;
     if (first === undefined || second === undefined) throw new Error("a client has no match");
