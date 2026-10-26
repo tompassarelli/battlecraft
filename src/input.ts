@@ -6,6 +6,8 @@ export interface PlayerInput {
   pressed: number;
   aimX: number;
   aimY: number;
+  castAimX: number;
+  castAimY: number;
 }
 
 export const KEY_W = 0x57;
@@ -18,11 +20,18 @@ export const MOVE_KEYS: readonly (readonly [key: number, bit: number])[] = [
   [KEY_W, MOVE_UP], [KEY_A, MOVE_LEFT], [KEY_S, MOVE_DOWN], [KEY_D, MOVE_RIGHT],
 ];
 export const ABILITY_KEYS: readonly number[] = [KEY_Q];
+// A key event fires only for the exact Shift, Ctrl, Alt and Windows meta mask it was registered with.
+export const KEY_METAS = 16;
 
 export function keyDown(input: PlayerInput, key: number): void {
   for (const [moveKey, bit] of MOVE_KEYS) if (moveKey === key) input.held = input.held | bit;
   for (let index = 0; index < ABILITY_KEYS.length; index++) {
-    if (ABILITY_KEYS[index] === key) input.pressed = input.pressed | (1 << index);
+    if (ABILITY_KEYS[index] !== key) continue;
+    if (input.pressed === 0) {
+      input.castAimX = input.aimX;
+      input.castAimY = input.aimY;
+    }
+    input.pressed = input.pressed | (1 << index);
   }
 }
 
@@ -36,7 +45,8 @@ export function aimAt(input: PlayerInput, worldX: number, worldY: number, center
 }
 
 export function takeRow(input: PlayerInput): InputRow {
-  const row = { held: input.held, pressed: input.pressed, aimX: input.aimX, aimY: input.aimY };
+  const casting = input.pressed !== 0;
+  const row = { held: input.held, pressed: input.pressed, aimX: casting ? input.castAimX : input.aimX, aimY: casting ? input.castAimY : input.aimY };
   input.pressed = 0;
   return row;
 }
