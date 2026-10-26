@@ -27,7 +27,13 @@ bun scripts/battlecraft.ts headless    # the headless journey on its own
 ```
 
 The first `bun test` builds Lua 5.3.6 with 32-bit numbers, as Warcraft runs
-it, into Wisp's cache; it needs a C compiler. Set `LUA` to use one you built.
+it, into Wisp's cache; it needs a C compiler, except on Windows, where Wisp
+ships it prebuilt. Set `LUA` to use one you built.
+
+The Windows workflow (`.github/workflows/windows.yml`) is the gate for a
+Windows machine with only Bun and Git: on `windows-latest`, with gcc, make and
+nix removed from `PATH`, it installs, type-checks, runs every test including
+the 32-bit Lua ones, and plays the headless journey.
 
 The headless journey plays the map in two simulated clients: both champions
 move, cast, cool down and hit the dummy until it resets, through a hot reload.
@@ -35,10 +41,11 @@ It runs three times, with input messages delivered at once, with Battle.net's
 measured delay (`syncDelivery(MEASURED_BATTLE_NET)`) and with that delay plus
 Warcraft's bursty turns (`turnBursts()`). Each time both clients must make the
 same synchronized Warcraft calls, hit the dummy on the same frames, confirm the
-same state and float each hit's damage once. A one-client run checks that a
-player alone keeps playing. Warcraft's mouse events are not
-simulated yet, so the journey aims at the starting aim point, the arena
-center.
+same state and float each hit's damage once. Synchronized mouse moves aim the casts away from the arena center: one arrow
+misses and expires at its range, and the rest hit the dummy. The compiled map
+in 32-bit Lua must make the same calls, rollbacks, hits and checksums as the
+TypeScript in Bun under every delivery. A one-client run checks that a player
+alone keeps playing.
 
 ## How it fits together
 
@@ -124,7 +131,7 @@ at least 2048 by 1536 around its center, the arena's size. A base saved once
 can be reused without opening World Editor again. Keep base maps, built maps
 and any game files out of this repository. On first use the build compiles
 Wisp's map packager, which needs `nix` (or `STORMLIB_PREFIX` and `CC`); see
-Wisp's [editor-free guide](https://github.com/tompassarelli/wisp/blob/24ce98b6feca1b4059501508177a3783ef9c768d/docs/editor-free.md).
+Wisp's [editor-free guide](https://github.com/tompassarelli/wisp/blob/7259317eaec3bc1a60404fa7efbfe5e401b20f61/docs/editor-free.md).
 
 ## Wisp version
 

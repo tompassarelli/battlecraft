@@ -21,7 +21,6 @@ export const BATTLECRAFT_MAP = {
   intentionalNoops: {
     FogEnable: "visibility only; the simulation never reads it",
     FogMaskEnable: "visibility only; the simulation never reads it",
-    TriggerRegisterPlayerEvent: "Wisp's headless runtime has no synchronized mouse or leave events yet, so this journey aims at the starting aim point, the arena center, and leaving is tested on the session",
   },
 };
 
@@ -35,14 +34,17 @@ export const ARENA_JOURNEY: Journey = {
     { frame: 34, player: 1, key: KEY_S, meta: 0, down: false },
     { frame: 40, player: 1, key: KEY_A, meta: 0, down: false },
     { frame: 60, player: 0, key: KEY_Q, meta: 0 },
+    { frame: 66, player: 1, playerMouse: { x: -300, y: 52 } },
     { frame: 70, player: 1, key: KEY_Q, meta: 0 },
     { frame: 86, player: 1, key: KEY_Q, meta: 0 },
     { frame: 100, player: 0, key: KEY_Q, meta: 0 },
+    { frame: 120, player: 0, playerMouse: { x: 300, y: 500 } },
     { frame: 130, player: 0, key: KEY_Q, meta: 0, down: true },
     { frame: 133, player: 0, key: KEY_Q, meta: 0, down: false },
     { frame: 140, player: 1, key: KEY_Q, meta: 0 },
     { frame: 150, reload: true },
     { frame: 200, player: 0, key: KEY_W, meta: 0, down: true },
+    { frame: 210, player: 1, key: KEY_Q, meta: 0 },
     { frame: 220, player: 0, key: KEY_W, meta: 0, down: false },
     { frame: 300, player: 0, chat: "-checksum" },
   ],

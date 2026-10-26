@@ -4,8 +4,8 @@ permissions:
   contents: read
 jobs:
   wisp:
-    uses: tompassarelli/wisp/.github/workflows/consumer.yml@24ce98b6feca1b4059501508177a3783ef9c768d
+    uses: tompassarelli/wisp/.github/workflows/consumer.yml@7259317eaec3bc1a60404fa7efbfe5e401b20f61
     with:
       bun-version: 1.3.13
-      wisp-ref: 24ce98b6feca1b4059501508177a3783ef9c768d
+      wisp-ref: 7259317eaec3bc1a60404fa7efbfe5e401b20f61
       headless: bun scripts/battlecraft.ts headless

@@ -38,7 +38,7 @@ function play(net: JourneyNet) {
   return { clients, result, lines: journeyReport(net, clients, result, matchOf) };
 }
 
-test("under instant, Battle.net and turn-burst delivery both clients move, cast and hit the dummy on the same frames, roll back to the confirmed state and agree", () => {
+test("under instant, Battle.net and turn-burst delivery both clients move, aim with the mouse, cast, hit the dummy on the same frames and miss once to range, roll back to the confirmed state and agree", () => {
   for (const net of JOURNEY_NETS) {
     const { clients, result, lines } = play(net);
     console.log(lines.join("\n"));
@@ -57,11 +57,10 @@ test("under instant, Battle.net and turn-burst delivery both clients move, cast 
       expect(session.stats.messages * 6).toBeLessThanOrEqual(session.callbacks + 18);
       const settled = predictedAt(session, session.confirmedFrame);
       expect(settled === undefined ? "gone" : checksum(settled)).toBe(checksum(session.confirmed));
-      expect(current.display.shownHits).toHaveLength(4);
-      expect(new Set(current.display.shownHits).size).toBe(4);
+      expect(current.display.shownHits).toEqual(["0@63.0", "1@73.0", "1@143.0", "1@213.0"]);
       const labels = client.textTags.poses().map(({ text }) => text);
       expect(labels).toContain("Training dummy 100/100");
-      const shown = `frame ${session.confirmedFrame} checksum ${checksum(session.confirmed)} dummy hits 90 96 160 166`;
+      const shown = `frame ${session.confirmedFrame} checksum ${checksum(session.confirmed)} dummy hits 90 96 166 236`;
       expect(client.messages).toEqual(["hot reload 1 applied", shown]);
       expect(client.files.get(`battlecraft-checksum-p${client.slot}.txt`)).toEqual([shown]);
     }
@@ -81,7 +80,7 @@ test("under instant, Battle.net and turn-burst delivery both clients move, cast 
     const diagonal = Math.floor(straight * 181 / 256);
     expect({ x: ranger0?.x, y: ranger0?.y }).toEqual({ x: -600 * SCALE, y: 40 * straight });
     expect({ x: ranger1?.x, y: ranger1?.y }).toEqual({ x: 600 * SCALE - 14 * diagonal - 6 * straight, y: -8 * straight - 14 * diagonal });
-    expect(confirmed.nextProjectile).toBe(4);
+    expect(confirmed.nextProjectile).toBe(5);
     expect(confirmed.projectiles).toEqual([]);
     const [one, two] = result.clients;
     expect(one?.calls).toBe(two?.calls ?? 0);
@@ -89,7 +88,7 @@ test("under instant, Battle.net and turn-burst delivery both clients move, cast 
   }
 });
 
-test("the compiled bundle in 32-bit Lua plays the journey under every delivery with the same hit frames, checksums and display as the TypeScript in Bun", () => {
+test("the compiled bundle in 32-bit Lua plays the journey under every delivery with the same calls, rollbacks, hit frames, checksums and display as the TypeScript in Bun", () => {
   expect(report(mapCompiler(join(root, "tsconfig.map.json"))())).toBe("");
   expect(report(mapCompiler(join(root, "tsconfig.headless.json"))())).toBe("");
   const run = Bun.spawnSync([
@@ -99,11 +98,7 @@ test("the compiled bundle in 32-bit Lua plays the journey under every delivery w
   const lines = run.stdout.toString().trimEnd().split(/\r?\n/);
   console.log(lines.join("\n"));
   expect({ code: run.exitCode, stderr: run.stderr.toString() }).toEqual({ code: 0, stderr: "" });
-  const bun = JOURNEY_NETS.flatMap((net) => play(net).lines);
-  // Wisp's syncDelivery computes some arrival frames a frame later in Lua32 than in Bun, so only instant delivery's transport matches exactly.
-  const compared = (line: string) => !line.includes(" transport ") || line.startsWith("instant ");
-  expect(lines.filter(compared)).toEqual(bun.filter(compared));
-  expect(lines.filter((line) => !compared(line))).toHaveLength(bun.filter((line) => !compared(line)).length);
+  expect(lines).toEqual(JOURNEY_NETS.flatMap((net) => play(net).lines));
 }, 60_000);
 
 const SOLO_JOURNEY: Journey = {
