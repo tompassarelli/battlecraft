@@ -6,9 +6,12 @@ input and rollback lessons from
 [Smashcraft](https://github.com/tompassarelli/smashcraft).
 
 Two players each control a champion in a walled arena: WASD moves, the mouse
-aims, Q fires a skillshot at the aim point. A training dummy in the middle
+aims, Q fires a skillshot at the aim point. The map also runs alone: a slot
+with no human in it, or a player who leaves, keeps a champion that stands
+still. A training dummy in the middle
 shows its health, floats the damage it takes and resets when it reaches zero.
-Type `-checksum` in chat to print the simulation's checksum on every client.
+Type `-checksum` in chat to print the confirmed simulation's frame and
+checksum on every client.
 The built map runs in the stock game with nothing else installed.
 
 ## Run the tests
@@ -27,10 +30,15 @@ The first `bun test` builds Lua 5.3.6 with 32-bit numbers, as Warcraft runs
 it, into Wisp's cache; it needs a C compiler. Set `LUA` to use one you built.
 
 The headless journey plays the map in two simulated clients: both champions
-move, cast, cool down and hit the dummy until it resets, through a hot reload,
-and both clients must make the same Warcraft calls and print the same
-checksum. Warcraft's mouse events are not simulated yet, so the journey aims
-at the starting aim point, the arena center.
+move, cast, cool down and hit the dummy until it resets, through a hot reload.
+It runs three times, with input messages delivered at once, with Battle.net's
+measured delay (`syncDelivery(MEASURED_BATTLE_NET)`) and with that delay plus
+Warcraft's bursty turns (`turnBursts()`). Each time both clients must make the
+same synchronized Warcraft calls, hit the dummy on the same frames, confirm the
+same state and float each hit's damage once. A one-client run checks that a
+player alone keeps playing. Warcraft's mouse events are not
+simulated yet, so the journey aims at the starting aim point, the arena
+center.
 
 ## How it fits together
 
@@ -38,11 +46,51 @@ at the starting aim point, the arena center.
 | --- | --- |
 | `src/sim/` | The simulation: all game state, integers only. `step(state, inputs)` is a pure function of the state and one `InputRow` per player. |
 | `src/champions/` | Champions: one file each, and `registry.ts` listing them. |
-| `src/input.ts` | Turns Warcraft's synchronized key and mouse events into each frame's input rows. |
-| `src/display.ts` | Draws the state with stock Warcraft units, effects and floating text. It never reads the game back. |
+| `src/input.ts` | Builds the local player's next input row from polled keys, key-down events and the synchronized mouse. |
+| `src/inputCodec.ts` | How an input row travels: neutral row, prediction, equality and its delta encoding. |
+| `src/netcode/` | Frame-stamped input, knowing nothing of Battlecraft's rows: ledger, batched messages, prediction and rollback. |
+| `src/display.ts` | Draws the predicted state with stock Warcraft effects and floating text made at startup. It never reads the game back. |
 | `src/main.ts` | The map entry: `start()` creates everything once, `install()` registers handlers and runs again after each hot reload. |
 | `test/` | The hit-rule test and the headless journey. |
 | `scripts/battlecraft.ts` | Commands: `map build`, `map rebuild`, `hot`, `fresh`, `client`, `headless`. |
+
+## Input and netcode
+
+Each 60 Hz callback, the local player's keys are polled (`BlzIsKeyPressed`
+reads the client's own keyboard, without a round trip) into the row for frame
+F + 2, where F is the next frame to simulate. An ability press latches the
+aim and is carried in that row, so a skillshot cast on frame N uses the same
+aim on every client. A tap that starts and ends between two polls still casts
+through its synchronized key-down event; a move key tapped for less than a
+frame is lost, as it was before.
+
+Rows go out in one synchronized message about every 6 callbacks (sooner for a
+press), under a token bucket that keeps the average at 10 messages a second
+and every message under 200 bytes. A message carries every unsent frame: the
+first row, then only rows that differ from holding the one before. Every
+client accepts the same messages in the same order into its ledger, so the
+confirmed simulation, stepped only on accepted rows, is identical everywhere.
+
+The display draws a predicted simulation instead: it runs the local rows at
+once and guesses that each remote player keeps holding their last row. When a
+remote row arrives that differs from the guess, the prediction rolls back to
+the snapshot before it and runs forward again. Snapshots cost nothing extra,
+as `step` returns new immutable state. Prediction waits when it would run more
+than 24 frames past the remote rows it has, and runs up to 6 frames a callback
+to catch up after a stall. Floating damage fires once per arrow, however many
+times a rollback runs the frame that hit: an arrow is known by its caster,
+cast frame and ability, because a late cast renumbers the projectiles.
+
+Every client decides at start which slots take part: a slot that is playing
+and controlled by a user. Every other slot gets idle rows without waiting for
+them. When a player leaves, Warcraft's leave event reaches every client at the
+same point, so every client treats that player's rows after the last one its
+ledger accepted from them as idle and rolls the prediction back if it had
+guessed otherwise.
+
+The netcode module takes the row through a `RowCodec`; Battlecraft's is
+`INPUT_CODEC` in `src/inputCodec.ts`. Add a row field there and in
+`src/sim/input.ts` and the netcode needs no change.
 
 The simulation runs at 60 frames a second. Keep it deterministic: integers
 only (positions are in sixteenths of a world unit), `floorDiv`/`floorMod` from
@@ -53,7 +101,7 @@ integers are 32-bit.
 ## Add a champion
 
 A champion is data plus pure functions. Copy `src/champions/ranger.ts` to a
-new file, change its name, unit type, radius, move speed, health and
+new file, change its name, model, radius, move speed, health and
 abilities, and add it to `CHAMPIONS` in `src/champions/registry.ts`. An
 ability is a cooldown, projectile speed, range, radius, damage and model, plus
 `cast(state, casterId, aim)`, which returns the new state; `skillshot()` makes

@@ -1,13 +1,14 @@
-import { SCALE } from "./sim/fixed";
+import { inputRow, AIM_LIMIT } from "./inputCodec";
+import { SCALE, clamp } from "./sim/fixed";
 import { type InputRow, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, MOVE_UP } from "./sim/input";
 
 export interface PlayerInput {
-  held: number;
-  pressed: number;
+  readonly sample: InputRow;
   aimX: number;
   aimY: number;
-  castAimX: number;
-  castAimY: number;
+  polled: number;
+  readonly unmatchedRises: number[];
+  readonly owedPresses: number[];
 }
 
 export const KEY_W = 0x57;
@@ -23,30 +24,45 @@ export const ABILITY_KEYS: readonly number[] = [KEY_Q];
 // A key event fires only for the exact Shift, Ctrl, Alt and Windows meta mask it was registered with.
 export const KEY_METAS = 16;
 
-export function keyDown(input: PlayerInput, key: number): void {
-  for (const [moveKey, bit] of MOVE_KEYS) if (moveKey === key) input.held = input.held | bit;
+export function playerInput(): PlayerInput {
+  return { sample: inputRow(), aimX: 0, aimY: 0, polled: 0, unmatchedRises: ABILITY_KEYS.map(() => 0), owedPresses: ABILITY_KEYS.map(() => 0) };
+}
+
+function press(input: PlayerInput, index: number): void {
+  const sample = input.sample;
+  if (sample.pressed === 0) {
+    sample.aimX = input.aimX;
+    sample.aimY = input.aimY;
+  }
+  sample.pressed = sample.pressed | (1 << index);
+}
+
+export function poll(input: PlayerInput, held: number, abilities: number): void {
+  input.sample.held = held;
+  const rose = abilities & ~input.polled;
+  input.polled = abilities;
   for (let index = 0; index < ABILITY_KEYS.length; index++) {
-    if (ABILITY_KEYS[index] !== key) continue;
-    if (input.pressed === 0) {
-      input.castAimX = input.aimX;
-      input.castAimY = input.aimY;
+    if ((rose & (1 << index)) !== 0 && (input.owedPresses[index] ?? 0) === 0) {
+      press(input, index);
+      input.unmatchedRises[index] = (input.unmatchedRises[index] ?? 0) + 1;
     }
-    input.pressed = input.pressed | (1 << index);
+    input.owedPresses[index] = 0;
   }
 }
 
-export function keyUp(input: PlayerInput, key: number): void {
-  for (const [moveKey, bit] of MOVE_KEYS) if (moveKey === key) input.held = input.held & ~bit;
+export function keyDown(input: PlayerInput, key: number): void {
+  for (let index = 0; index < ABILITY_KEYS.length; index++) {
+    if (ABILITY_KEYS[index] !== key) continue;
+    const unmatched = input.unmatchedRises[index] ?? 0;
+    if (unmatched > 0) input.unmatchedRises[index] = unmatched - 1;
+    else {
+      press(input, index);
+      input.owedPresses[index] = (input.owedPresses[index] ?? 0) + 1;
+    }
+  }
 }
 
 export function aimAt(input: PlayerInput, worldX: number, worldY: number, centerX: number, centerY: number): void {
-  input.aimX = Math.floor((worldX - centerX) * SCALE);
-  input.aimY = Math.floor((worldY - centerY) * SCALE);
-}
-
-export function takeRow(input: PlayerInput): InputRow {
-  const casting = input.pressed !== 0;
-  const row = { held: input.held, pressed: input.pressed, aimX: casting ? input.castAimX : input.aimX, aimY: casting ? input.castAimY : input.aimY };
-  input.pressed = 0;
-  return row;
+  input.aimX = clamp(Math.floor((worldX - centerX) * SCALE), -AIM_LIMIT, AIM_LIMIT);
+  input.aimY = clamp(Math.floor((worldY - centerY) * SCALE), -AIM_LIMIT, AIM_LIMIT);
 }

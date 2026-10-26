@@ -18,7 +18,7 @@ export interface Ability {
 
 export interface ChampionKind {
   readonly name: string;
-  readonly unitType: number;
+  readonly model: string;
   readonly radius: number;
   readonly moveSpeed: number;
   readonly health: number;

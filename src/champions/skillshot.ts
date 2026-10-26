@@ -23,7 +23,7 @@ export function skillshot(index: number, data: SkillshotData): Ability {
       const vx = length === 0 ? floorDiv(at(FACING_X, facing) * data.speed, UNIT) : floorDiv(dx * data.speed, length);
       const vy = length === 0 ? floorDiv(at(FACING_Y, facing) * data.speed, UNIT) : floorDiv(dy * data.speed, length);
       const projectile = {
-        id: state.nextProjectile, owner: casterId, kind: caster.kind, ability: index,
+        id: state.nextProjectile, owner: casterId, kind: caster.kind, ability: index, castFrame: state.frame,
         x: caster.x, y: caster.y, vx, vy, facing, speed: data.speed, remaining: data.range, radius: data.radius, damage: data.damage,
       };
       const champions = state.champions.map((champion) => champion.id === casterId ? { ...champion, facing } : champion);

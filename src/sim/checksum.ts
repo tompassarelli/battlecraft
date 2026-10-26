@@ -21,7 +21,7 @@ export function checksum(state: SimState): string {
   }
   add(state.projectiles.length);
   for (const projectile of state.projectiles) {
-    add(projectile.id); add(projectile.owner); add(projectile.kind); add(projectile.ability); add(projectile.x); add(projectile.y);
+    add(projectile.id); add(projectile.owner); add(projectile.kind); add(projectile.ability); add(projectile.castFrame); add(projectile.x); add(projectile.y);
     add(projectile.vx); add(projectile.vy); add(projectile.facing); add(projectile.speed); add(projectile.remaining);
     add(projectile.radius); add(projectile.damage);
   }
@@ -29,7 +29,7 @@ export function checksum(state: SimState): string {
   add(dummy.x); add(dummy.y); add(dummy.radius); add(dummy.health); add(dummy.maxHealth);
   add(state.hits.length);
   for (const hit of state.hits) {
-    add(hit.target); add(hit.damage); add(hit.x); add(hit.y);
+    add(hit.target); add(hit.projectile); add(hit.owner); add(hit.ability); add(hit.castFrame); add(hit.damage); add(hit.x); add(hit.y);
   }
   return `${first}:${second}`;
 }

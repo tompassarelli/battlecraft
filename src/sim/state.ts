@@ -20,6 +20,7 @@ export interface Projectile {
   readonly owner: number;
   readonly kind: number;
   readonly ability: number;
+  readonly castFrame: number;
   readonly x: number;
   readonly y: number;
   readonly vx: number;
@@ -41,6 +42,10 @@ export interface Dummy {
 
 export interface Hit {
   readonly target: number;
+  readonly projectile: number;
+  readonly owner: number;
+  readonly ability: number;
+  readonly castFrame: number;
   readonly damage: number;
   readonly x: number;
   readonly y: number;
