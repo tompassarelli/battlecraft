@@ -135,6 +135,12 @@ Players pick champions by registry index in `initialState([0, 0])` in
 bun scripts/battlecraft.ts map build --base BASE.w3m --out OUT/battlecraft.w3x
 ```
 
+The map's in-game title is `Battlecraft dev <short commit>`, so builds are
+told apart in Warcraft's map list. To install a build, run
+`bun scripts/battlecraft.ts map install OUT/battlecraft.w3x --documents "<Documents>/Warcraft III"`
+(or set `BATTLECRAFT_DOCUMENTS`): it copies the map into `Maps/00-Battlecraft`
+and moves any older build into `Maps/00-Battlecraft/old`.
+
 The build needs a base map: any Warcraft III map saved from World Editor with
 Lua as its script language. It supplies the terrain, size and camera bounds;
 the build replaces its script, players and forces. Its playable area should be
