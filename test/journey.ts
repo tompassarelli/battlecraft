@@ -4,7 +4,7 @@ import type { Lockstep, SyncDelivery } from "wisp/src/headless/lockstep";
 import { type CallbackTiming, MEASURED_BATTLE_NET, syncDelivery, turnBursts } from "wisp/src/headless/syncChannel";
 import { KEY_A, KEY_Q, KEY_S, KEY_W } from "../src/input";
 import type { Match } from "../src/main";
-import { predictedAt } from "../src/netcode/session";
+import { predictedAt } from "wisp/src/netcode/session";
 import { checksum } from "../src/sim/checksum";
 
 const PREDICTED = "draws this client's prediction on a handle made at shared startup";

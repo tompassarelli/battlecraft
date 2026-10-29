@@ -1,7 +1,7 @@
 import { journeyProblems, runJourney } from "wisp/src/headless/journey";
 import { luaLockstep, readFile } from "wisp/src/headless/lua";
 import type { Match } from "../src/main";
-import { MESSAGE_MAX_BYTES } from "../src/netcode/message";
+import { MESSAGE_MAX_BYTES } from "wisp/src/netcode/message";
 import { checksum } from "../src/sim/checksum";
 import { ARENA_JOURNEY, BATTLECRAFT_MAP, JOURNEY_NETS, journeyReport } from "./journey";
 

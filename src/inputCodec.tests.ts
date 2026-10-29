@@ -2,7 +2,7 @@ import { at } from "wisp/src/runtime/lookup";
 import { assertEquals, assertTrue, test } from "wisp/src/runtime/testing";
 import { floorMod } from "wisp/src/sim/intMath";
 import { AIM_LIMIT, INPUT_CODEC, inputRow, validRow } from "./inputCodec";
-import { MESSAGE_MAX_BYTES, MESSAGE_MAX_FRAMES, decodeMessage, encodeMessage } from "./netcode/message";
+import { MESSAGE_MAX_BYTES, MESSAGE_MAX_FRAMES, decodeMessage, encodeMessage } from "wisp/src/netcode/message";
 import type { InputRow } from "./sim/input";
 
 export function lcg(seed: number): () => number {

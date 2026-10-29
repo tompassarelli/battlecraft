@@ -3,8 +3,8 @@ import { assertEquals, assertGreaterThan, assertTrue, test } from "wisp/src/runt
 import { floorMod } from "wisp/src/sim/intMath";
 import { lcg } from "./inputCodec.tests";
 import { AIM_LIMIT, INPUT_CODEC, inputRow } from "./inputCodec";
-import { ringRow } from "./netcode/frameRing";
-import { NET_SETTINGS, type Session, type Simulation, createSession, leave, predictedAt, remoteThrough, receive, tick } from "./netcode/session";
+import { ringRow } from "wisp/src/netcode/frameRing";
+import { NET_SETTINGS, type Session, type Simulation, createSession, leave, predictedAt, remoteThrough, receive, tick } from "wisp/src/netcode/session";
 import { checksum } from "./sim/checksum";
 import { type InputRow, MOVE_RIGHT } from "./sim/input";
 import type { SimState } from "./sim/state";

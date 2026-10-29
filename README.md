@@ -39,7 +39,7 @@ ships it prebuilt. Set `LUA` to use one you built.
 the saved files' type errors, the affected tests and the headless journey;
 with `--data CUSTOM_MAP_DATA_DIR` each save also hot-reloads into a running
 game, and `--since REF` answers once for everything changed since REF and
-exits ([Wisp's dev loop](https://github.com/tompassarelli/wisp/blob/a2b906596c689bd08b5c54fb4ad783fd509b3616/docs/dev.md)).
+exits ([Wisp's dev loop](https://github.com/tompassarelli/wisp/blob/1684927ee23e84b93584e842aac558baa1c7613f/docs/dev.md)).
 
 The Windows workflow (`.github/workflows/windows.yml`) is the gate for a
 Windows machine with only Bun and Git: on `windows-latest`, with gcc, make and
@@ -66,7 +66,7 @@ alone keeps playing.
 | `src/champions/` | Champions: one file each, and `registry.ts` listing them. |
 | `src/input.ts` | Builds the local player's next input row from polled keys, key-down events and the synchronized mouse. |
 | `src/inputCodec.ts` | How an input row travels: neutral row, prediction, equality and its delta encoding. |
-| `src/netcode/` | Frame-stamped input, knowing nothing of Battlecraft's rows: ledger, batched messages, prediction and rollback. |
+| `wisp/src/netcode/` | Wisp's rollback netcode, in the pinned package: frame-stamped input that knows nothing of Battlecraft's rows (ledger, batched messages, prediction and rollback). |
 | `src/display.ts` | Draws the predicted state with stock Warcraft effects and floating text made at startup. It never reads the game back. |
 | `src/main.ts` | The map entry: `start()` creates everything once, `install()` registers handlers and runs again after each hot reload. |
 | `test/` | The hit-rule test and the headless journey. |
@@ -106,7 +106,7 @@ same point, so every client treats that player's rows after the last one its
 ledger accepted from them as idle and rolls the prediction back if it had
 guessed otherwise.
 
-The netcode module takes the row through a `RowCodec`; Battlecraft's is
+Wisp's netcode module (`wisp/src/netcode`, [its guide](https://github.com/tompassarelli/wisp/blob/main/docs/netcode.md)) takes the row through a `RowCodec`; Battlecraft's is
 `INPUT_CODEC` in `src/inputCodec.ts`. Add a row field there and in
 `src/sim/input.ts` and the netcode needs no change.
 
@@ -149,7 +149,7 @@ can be reused without opening World Editor again. Keep base maps, built maps
 and any game files out of this repository. On Windows Wisp ships its map packager
 prebuilt. Elsewhere the build compiles it on first use, which needs `nix` (or
 `STORMLIB_PREFIX` and `CC`); see
-Wisp's [editor-free guide](https://github.com/tompassarelli/wisp/blob/a2b906596c689bd08b5c54fb4ad783fd509b3616/docs/editor-free.md).
+Wisp's [editor-free guide](https://github.com/tompassarelli/wisp/blob/1684927ee23e84b93584e842aac558baa1c7613f/docs/editor-free.md).
 
 ## Wisp version
 

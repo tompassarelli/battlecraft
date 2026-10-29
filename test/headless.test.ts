@@ -11,7 +11,7 @@ import { KEY_Q, KEY_W } from "../src/input";
 import { INPUT_CODEC, inputRow } from "../src/inputCodec";
 import { type Match, install, start } from "../src/main";
 import { ranger } from "../src/champions/ranger";
-import { NET_SETTINGS, type Session, type Simulation, createSession, predictedAt, receive, tick } from "../src/netcode/session";
+import { NET_SETTINGS, type Session, type Simulation, createSession, predictedAt, receive, tick } from "wisp/src/netcode/session";
 import { checksum } from "../src/sim/checksum";
 import { SCALE } from "../src/sim/fixed";
 import type { InputRow } from "../src/sim/input";

@@ -10,13 +10,13 @@
     "headless": "bun scripts/battlecraft.ts headless"
   },
   "devDependencies": {
-    "@effect/tsgo": "0.51.1",
+    "@effect/tsgo": "0.53.5",
     "@types/bun": "1.4.2",
-    "effect": "4.0.3",
+    "effect": "4.0.5",
     "lua-types": "2.14.1",
     "typescript": "6.0.2",
     "typescript-native": "npm:typescript@7.0.2",
     "typescript-to-lua": "1.37.1",
-    "wisp": "file:vendor/wisp-a2b906596c689bd08b5c54fb4ad783fd509b3616.tgz"
+    "wisp": "file:vendor/wisp-1684927ee23e84b93584e842aac558baa1c7613f.tgz"
   }
 }

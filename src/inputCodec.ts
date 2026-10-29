@@ -1,5 +1,5 @@
-import type { RowCodec } from "./netcode/codec";
-import { type WireReader, digit, readDigit, readSignedVarint, readVarint, signedVarint, varint } from "./netcode/wire";
+import type { RowCodec } from "wisp/src/netcode/codec";
+import { type WireReader, digit, readDigit, readSignedVarint, readVarint, signedVarint, varint } from "wisp/src/netcode/wire";
 import { ALL_MOVES, type InputRow } from "./sim/input";
 
 export const ALL_ABILITIES = 63;
