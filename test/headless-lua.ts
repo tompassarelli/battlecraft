@@ -2,6 +2,7 @@ import { journeyProblems, runJourney } from "wisp/src/headless/journey";
 import { luaLockstep, readFile } from "wisp/src/headless/lua";
 import type { Match } from "../src/main";
 import { MESSAGE_MAX_BYTES } from "wisp/src/netcode/message";
+import { confirmedFrame } from "wisp/src/netcode/session";
 import { checksum } from "../src/sim/checksum";
 import { ARENA_JOURNEY, BATTLECRAFT_MAP, JOURNEY_NETS, journeyReport } from "./journey";
 
@@ -25,7 +26,7 @@ for (const net of JOURNEY_NETS) {
     if (session === undefined || session.stats.refused !== 0 || session.stats.largest > MESSAGE_MAX_BYTES) {
       print(`${net.name} p${client.slot}: missing match, refused messages or a message over ${MESSAGE_MAX_BYTES} bytes`);
       problems++;
-    } else checksums.push(`${session.confirmedFrame} ${checksum(session.confirmed)}`);
+    } else checksums.push(`${confirmedFrame(session)} ${checksum(session.confirmed)}`);
   }
   if (checksums.length === 2 && checksums[0] !== checksums[1]) {
     print(`${net.name}: the clients confirmed different states: ${checksums.join(", ")}`);

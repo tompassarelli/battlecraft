@@ -3,8 +3,7 @@ import { assertEquals, assertGreaterThan, assertTrue, test } from "wisp/src/runt
 import { floorMod } from "wisp/src/sim/intMath";
 import { lcg } from "./inputCodec.tests";
 import { AIM_LIMIT, INPUT_CODEC, inputRow } from "./inputCodec";
-import { ringRow } from "wisp/src/netcode/frameRing";
-import { NET_SETTINGS, type Session, type Simulation, createSession, leave, predictedAt, remoteThrough, receive, tick } from "wisp/src/netcode/session";
+import { NET_SETTINGS, type Session, type Simulation, confirmedFrame, createSession, leave, localRow, predictedAt, presentFrame, remoteThrough, receive, tick } from "wisp/src/netcode/session";
 import { checksum } from "./sim/checksum";
 import { type InputRow, MOVE_RIGHT } from "./sim/input";
 import type { SimState } from "./sim/state";
@@ -55,9 +54,9 @@ test("rollback: two clients trading rows over a late, bursty channel predict, ro
         }
       } else INPUT_CODEC.hold(sample, inputRow());
       const wire = tick(session, NET, NET_SETTINGS, sample);
-      for (let frame = at(recorded, player) + 1; frame <= session.present + NET_SETTINGS.delay; frame++) {
+      for (let frame = at(recorded, player) + 1; frame <= presentFrame(session) + NET_SETTINGS.delay; frame++) {
         const row = inputRow();
-        INPUT_CODEC.copy(row, ringRow(session.pending, frame) ?? inputRow());
+        INPUT_CODEC.copy(row, localRow(session, frame) ?? inputRow());
         at(captured, player)[frame] = row;
         recorded[player] = frame;
       }
@@ -70,15 +69,15 @@ test("rollback: two clients trading rows over a late, bursty channel predict, ro
   }
   const [first, second] = sessions;
   if (first === undefined || second === undefined) throw new Error("two sessions");
-  assertEquals(first.confirmedFrame, second.confirmedFrame, "confirmed frame");
-  assertGreaterThan(first.confirmedFrame, callbacks);
-  const truth = truthAt(captured, first.confirmedFrame);
+  assertEquals(confirmedFrame(first), confirmedFrame(second), "confirmed frame");
+  assertGreaterThan(confirmedFrame(first), callbacks);
+  const truth = truthAt(captured, confirmedFrame(first));
   assertEquals(checksum(first.confirmed), checksum(truth), "first client's confirmed state");
   assertEquals(checksum(second.confirmed), checksum(truth), "second client's confirmed state");
   for (const session of sessions) {
     assertGreaterThan(session.stats.rollbacks, 20);
     assertEquals(session.stats.refused, 0, "refused messages");
-    const settled = Math.min(session.present, remoteThrough(session));
+    const settled = Math.min(presentFrame(session), remoteThrough(session));
     const predicted = predictedAt(session, settled);
     if (predicted === undefined) throw new Error(`no prediction kept for frame ${settled}`);
     assertEquals(checksum(predicted), checksum(truthAt(captured, settled)), "rolled-back prediction");
@@ -113,9 +112,9 @@ test("leave: a player who leaves while holding a move key is idle after their la
       if (player === 1 && callback >= 50) sample.held = MOVE_RIGHT;
       if (player === 0 && floorMod(callback, 40) === 0) sample.held = floorMod(callback, 16);
       const wire = tick(session, NET, NET_SETTINGS, sample);
-      for (let frame = at(recorded, player) + 1; frame <= session.present + NET_SETTINGS.delay; frame++) {
+      for (let frame = at(recorded, player) + 1; frame <= presentFrame(session) + NET_SETTINGS.delay; frame++) {
         const row = inputRow();
-        INPUT_CODEC.copy(row, ringRow(session.pending, frame) ?? inputRow());
+        INPUT_CODEC.copy(row, localRow(session, frame) ?? inputRow());
         at(captured, player)[frame] = row;
         recorded[player] = frame;
       }
@@ -127,9 +126,9 @@ test("leave: a player who leaves while holding a move key is idle after their la
   assertGreaterThan(leaveAt, gone);
   const rows: InputRow[][] = [at(captured, 0), []];
   for (let frame = 1; frame <= gone; frame++) at(rows, 1)[frame] = at(at(captured, 1), frame);
-  assertGreaterThan(stayer.confirmedFrame, 250);
-  assertEquals(checksum(stayer.confirmed), checksum(truthAt(rows, stayer.confirmedFrame)), "confirmed state");
-  const predicted = predictedAt(stayer, stayer.confirmedFrame);
+  assertGreaterThan(confirmedFrame(stayer), 250);
+  assertEquals(checksum(stayer.confirmed), checksum(truthAt(rows, confirmedFrame(stayer))), "confirmed state");
+  const predicted = predictedAt(stayer, confirmedFrame(stayer));
   if (predicted === undefined) throw new Error("no prediction kept for the confirmed frame");
   assertEquals(checksum(predicted), checksum(stayer.confirmed), "rolled-back prediction");
   assertEquals(stayer.stats.refused, 0, "refused messages");

@@ -11,7 +11,7 @@ import { KEY_Q, KEY_W } from "../src/input";
 import { INPUT_CODEC, inputRow } from "../src/inputCodec";
 import { type Match, install, start } from "../src/main";
 import { ranger } from "../src/champions/ranger";
-import { NET_SETTINGS, type Session, type Simulation, createSession, predictedAt, receive, tick } from "wisp/src/netcode/session";
+import { NET_SETTINGS, type Session, type Simulation, confirmedFrame, createSession, predictedAt, presentFrame, receive, tick } from "wisp/src/netcode/session";
 import { checksum } from "../src/sim/checksum";
 import { SCALE } from "../src/sim/fixed";
 import type { InputRow } from "../src/sim/input";
@@ -55,12 +55,12 @@ test("under instant, Battle.net and turn-burst delivery both clients move, aim w
       expect(session.stats.refused).toBe(0);
       expect(session.stats.largest).toBeLessThanOrEqual(200);
       expect(session.stats.messages * 6).toBeLessThanOrEqual(session.callbacks + 18);
-      const settled = predictedAt(session, session.confirmedFrame);
+      const settled = predictedAt(session, confirmedFrame(session));
       expect(settled === undefined ? "gone" : checksum(settled)).toBe(checksum(session.confirmed));
       expect(current.display.shownHits).toEqual(["0@63.0", "1@73.0", "1@143.0", "1@213.0"]);
       const labels = client.textTags.poses().map(({ text }) => text);
       expect(labels).toContain("Training dummy 100/100");
-      const shown = `frame ${session.confirmedFrame} checksum ${checksum(session.confirmed)} dummy hits 90 96 166 236`;
+      const shown = `frame ${confirmedFrame(session)} checksum ${checksum(session.confirmed)} dummy hits 90 96 166 236`;
       expect(client.messages).toEqual(["hot reload 1 applied", shown]);
       expect(client.files.get(`battlecraft-checksum-p${client.slot}.txt`)).toEqual([shown]);
     }
@@ -68,9 +68,9 @@ test("under instant, Battle.net and turn-burst delivery both clients move, aim w
     if (first === undefined || second === undefined) throw new Error("a client has no match");
     expect(first.dummyHits).toHaveLength(4);
     expect(second.dummyHits).toEqual(first.dummyHits);
-    expect(second.session.confirmedFrame).toBe(first.session.confirmedFrame);
+    expect(confirmedFrame(second.session)).toBe(confirmedFrame(first.session));
     expect(checksum(second.session.confirmed)).toBe(checksum(first.session.confirmed));
-    expect(first.session.confirmedFrame).toBeGreaterThanOrEqual(CHECK_FRAME);
+    expect(confirmedFrame(first.session)).toBeGreaterThanOrEqual(CHECK_FRAME);
     if (net.delivery !== undefined) expect(first.session.stats.rollbacks + second.session.stats.rollbacks).toBeGreaterThan(0);
     const confirmed = first.session.confirmed;
     expect(confirmed.frame).toBeGreaterThan(240);
@@ -120,9 +120,9 @@ test("with one human player in the game the match keeps stepping past frame 300,
   const current = matchOf(client);
   if (current === undefined) throw new Error("p0 has no match");
   const session = current.session;
-  expect(session.present).toBeGreaterThan(400);
-  expect(session.confirmedFrame).toBeGreaterThan(400);
-  expect(checksum(predictedAt(session, session.confirmedFrame) ?? initialState([0, 0]))).toBe(checksum(session.confirmed));
+  expect(presentFrame(session)).toBeGreaterThan(400);
+  expect(confirmedFrame(session)).toBeGreaterThan(400);
+  expect(checksum(predictedAt(session, confirmedFrame(session)) ?? initialState([0, 0]))).toBe(checksum(session.confirmed));
   expect(current.dummyHits).toHaveLength(2);
   expect(at(current.dummyHits, 1)).toBeGreaterThan(300);
   const [ranger0, ranger1] = session.confirmed.champions;

@@ -4,7 +4,7 @@ import type { Lockstep, SyncDelivery } from "wisp/src/headless/lockstep";
 import { type CallbackTiming, MEASURED_BATTLE_NET, syncDelivery, turnBursts } from "wisp/src/headless/syncChannel";
 import { KEY_A, KEY_Q, KEY_S, KEY_W } from "../src/input";
 import type { Match } from "../src/main";
-import { predictedAt } from "wisp/src/netcode/session";
+import { confirmedFrame, predictedAt, presentFrame } from "wisp/src/netcode/session";
 import { checksum } from "../src/sim/checksum";
 
 const PREDICTED = "draws this client's prediction on a handle made at shared startup";
@@ -95,13 +95,13 @@ export function journeyReport(net: JourneyNet, clients: Lockstep, result: Journe
     }
     const session = current.session;
     const stats = session.stats;
-    const checked = session.confirmedFrame >= CHECK_FRAME ? predictedAt(session, CHECK_FRAME) : undefined;
-    const settled = predictedAt(session, session.confirmedFrame);
+    const checked = confirmedFrame(session) >= CHECK_FRAME ? predictedAt(session, CHECK_FRAME) : undefined;
+    const settled = predictedAt(session, confirmedFrame(session));
     lines.push(`${who}: arrows hit the dummy on frames ${current.dummyHits.join(" ")}`);
     lines.push(`${who}: frame ${CHECK_FRAME} checksum ${checked === undefined ? "not confirmed" : checksum(checked)}`);
     lines.push(`${who}: the rolled-back prediction ${settled !== undefined && checksum(settled) === checksum(session.confirmed) ? "equals" : "differs from"} the confirmed state`);
     lines.push(`${who}: hit text floated once for arrows ${current.display.shownHits.join(" ")}`);
-    lines.push(`${transport} p${client.slot}: confirmed frame ${session.confirmedFrame} checksum ${checksum(session.confirmed)}, predicted to frame ${session.present}`);
+    lines.push(`${transport} p${client.slot}: confirmed frame ${confirmedFrame(session)} checksum ${checksum(session.confirmed)}, predicted to frame ${presentFrame(session)}`);
     lines.push(`${transport} p${client.slot}: ${stats.rollbacks} rollbacks up to ${stats.deepest} frames deep, ${stats.held} held callbacks, ${stats.messages} messages up to ${stats.largest} bytes, ${stats.refused} refused`);
   }
   return lines;

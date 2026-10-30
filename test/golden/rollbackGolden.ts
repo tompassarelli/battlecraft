@@ -1,10 +1,9 @@
 // The recorded behaviour of Wisp's rollback session driving Battlecraft's input codec under seeded packet sequences. Bun and 32-bit Lua print the same text; test/rollback-golden.test.ts holds the record.
 import { at } from "wisp/src/runtime/lookup";
 import { floorDiv, floorMod } from "wisp/src/sim/intMath";
-import { ringRow } from "wisp/src/netcode/frameRing";
 import { FUTURE_LIMIT, type Receipt, knownThrough } from "wisp/src/netcode/ledger";
 import { encodeMessage } from "wisp/src/netcode/message";
-import { NET_SETTINGS, type Session, type Simulation, createSession, leave, predictedAt, receive, remoteThrough, tick } from "wisp/src/netcode/session";
+import { NET_SETTINGS, type Session, type Simulation, confirmedFrame, createSession, leave, predictedAt, presentFrame, receive, remoteThrough, tick } from "wisp/src/netcode/session";
 import { WIRE_MAX_VALUE } from "wisp/src/netcode/wire";
 import { INPUT_CODEC, inputRow } from "../../src/inputCodec";
 import { checksum } from "../../src/sim/checksum";
@@ -180,10 +179,11 @@ class Run {
   private inject(): void {
     const { plan, session } = this;
     const sender = floorMod(plan.local + 1, plan.players);
-    const confirmed = session.confirmedFrame;
+    const confirmed = confirmedFrame(session);
+    const known = knownThrough(session.ledger);
     const span = (first: number, last: number) => wireOf(plan.seed, sender, first, last, false);
-    this.offer(sender, span(confirmed + FUTURE_LIMIT, confirmed + FUTURE_LIMIT), "at-limit");
-    this.offer(sender, span(confirmed + FUTURE_LIMIT + 1, confirmed + FUTURE_LIMIT + 1), "past-limit");
+    this.offer(sender, span(known + FUTURE_LIMIT, known + FUTURE_LIMIT), "at-limit");
+    this.offer(sender, span(known + FUTURE_LIMIT + 1, known + FUTURE_LIMIT + 1), "past-limit");
     this.offer(sender, span(1, 3), "out-of-history");
     const through = at(session.ledger.through, sender);
     this.offer(sender, wireOf(plan.seed, sender, through - 2, through, true), "conflicting");
@@ -201,7 +201,7 @@ class Run {
       sample.aimY = floorMod(this.next(), 8193) - 4096;
     }
     const from = session.rollbackFrom;
-    const present = session.present;
+    const present = presentFrame(session);
     const rollbacksBefore = session.stats.rollbacks;
     const heldBefore = session.stats.held;
     const wire = tick(session, NET, NET_SETTINGS, sample);
@@ -220,15 +220,15 @@ class Run {
 
   private log(): void {
     const { session } = this;
-    const settled = Math.min(session.present, remoteThrough(session));
+    const settled = Math.min(presentFrame(session), remoteThrough(session));
     const predicted = predictedAt(session, settled);
-    this.out.push(`c${this.callback} K=${knownThrough(session.ledger)} present=${session.present} confirmed=${session.confirmedFrame} remote=${remoteThrough(session) < NO_ROLLBACK ? remoteThrough(session) : -1} sent=${session.sentThrough} held=${session.stats.held} refused=${session.stats.refused} confirmedSum=${checksum(session.confirmed)} settledSum=${predicted === undefined ? "none" : checksum(predicted)}`);
+    this.out.push(`c${this.callback} K=${knownThrough(session.ledger)} present=${presentFrame(session)} confirmed=${confirmedFrame(session)} remote=${remoteThrough(session) < NO_ROLLBACK ? remoteThrough(session) : -1} sent=${session.sentThrough} held=${session.stats.held} refused=${session.stats.refused} confirmedSum=${checksum(session.confirmed)} settledSum=${predicted === undefined ? "none" : checksum(predicted)}`);
   }
 
   private summarize(): void {
     const { session } = this;
     this.out.push(`receipts ${RECEIPTS.map((receipt) => `${receipt}=${this.receipts.get(receipt) ?? 0}`).join(" ")}`);
-    this.out.push(`rollbacks=${this.rollbacks} deepest=${this.deepest} firstLate=${this.firstLate} heldCallbacks=${this.held} firstHold=${this.firstHold} stats rollbacks=${session.stats.rollbacks} deepest=${session.stats.deepest} held=${session.stats.held} messages=${session.stats.messages} largest=${session.stats.largest} refused=${session.stats.refused} confirmed=${session.confirmedFrame} confirmedSum=${checksum(session.confirmed)}`);
+    this.out.push(`rollbacks=${this.rollbacks} deepest=${this.deepest} firstLate=${this.firstLate} heldCallbacks=${this.held} firstHold=${this.firstHold} stats rollbacks=${session.stats.rollbacks} deepest=${session.stats.deepest} held=${session.stats.held} messages=${session.stats.messages} largest=${session.stats.largest} refused=${session.stats.refused} confirmed=${confirmedFrame(session)} confirmedSum=${checksum(session.confirmed)}`);
   }
 }
 

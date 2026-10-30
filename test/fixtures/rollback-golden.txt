@@ -308,7 +308,7 @@ c247 rollback from=240 depth=7
 c248 s0 f248 conflict
 c250 leave p1 goneAfter=241 rollbackFrom=242
 c250 rollback from=242 depth=8
-c250 K=242 present=250 confirmed=242 remote=242 sent=250 held=0 refused=33 confirmedSum=2920645:2519830 settledSum=2920645:2519830
+c250 K=243 present=250 confirmed=243 remote=243 sent=250 held=0 refused=33 confirmedSum=4839329:5769680 settledSum=4839329:5769680
 c251 s1 f251 gone
 c252 rollback from=244 depth=8
 c260 rollback from=252 depth=8
@@ -381,7 +381,7 @@ c133 rollback from=111 depth=22
 c140 rollback from=117 depth=23
 c148 rollback from=123 depth=23
 c150 restart a new session; its wire carries no epoch, so rows still in flight from the old one reach it
-c150 K=2 present=1 confirmed=2 remote=2 sent=2 held=0 refused=0 confirmedSum=10206201:2677114 settledSum=10579831:11140517
+c150 K=2 present=1 confirmed=1 remote=2 sent=2 held=0 refused=0 confirmedSum=10579831:11140517 settledSum=10579831:11140517
 c152 s1 f152 tooFarAhead
 c163 s1 f163 tooFarAhead
 c169 s1 f169 tooFarAhead
@@ -496,61 +496,61 @@ c127 rollback from=122 depth=5
 c133 s1 f133 tooFarAhead
 c139 s1 f139 tooFarAhead
 c145 s1 f145 tooFarAhead
-c150 K=2 present=150 confirmed=2 remote=127 sent=150 held=0 refused=3 confirmedSum=10206201:2677114 settledSum=15235997:182687
+c150 K=2 present=127 confirmed=2 remote=127 sent=129 held=23 refused=3 confirmedSum=10206201:2677114 settledSum=15235997:182687
 c151 s1 f151 tooFarAhead
 c157 s1 f157 tooFarAhead
 c163 s1 f163 tooFarAhead
 c169 s1 f169 tooFarAhead
 c175 s1 f175 tooFarAhead
-c175 K=2 present=151 confirmed=2 remote=127 sent=153 held=24 refused=8 confirmedSum=10206201:2677114 settledSum=15235997:182687
+c175 K=2 present=127 confirmed=2 remote=127 sent=129 held=48 refused=8 confirmedSum=10206201:2677114 settledSum=15235997:182687
 c181 s1 f181 tooFarAhead
 c187 s1 f187 tooFarAhead
 c193 s1 f193 tooFarAhead
 c199 s1 f199 tooFarAhead
-c200 K=2 present=151 confirmed=2 remote=127 sent=153 held=49 refused=12 confirmedSum=10206201:2677114 settledSum=15235997:182687
+c200 K=2 present=127 confirmed=2 remote=127 sent=129 held=73 refused=12 confirmedSum=10206201:2677114 settledSum=15235997:182687
 c205 s1 f205 tooFarAhead
 c211 s1 f211 tooFarAhead
 c217 s1 f217 tooFarAhead
 c223 s1 f223 tooFarAhead
-c225 K=2 present=151 confirmed=2 remote=127 sent=153 held=74 refused=16 confirmedSum=10206201:2677114 settledSum=15235997:182687
+c225 K=2 present=127 confirmed=2 remote=127 sent=129 held=98 refused=16 confirmedSum=10206201:2677114 settledSum=15235997:182687
 c229 s1 f229 tooFarAhead
 c235 s1 f235 tooFarAhead
 c241 s1 f241 tooFarAhead
 c247 s1 f247 tooFarAhead
-c250 K=2 present=151 confirmed=2 remote=127 sent=153 held=99 refused=20 confirmedSum=10206201:2677114 settledSum=15235997:182687
+c250 K=2 present=127 confirmed=2 remote=127 sent=129 held=123 refused=20 confirmedSum=10206201:2677114 settledSum=15235997:182687
 c253 s1 f253 tooFarAhead
 c259 s1 f259 tooFarAhead
 c265 s1 f265 tooFarAhead
 c271 s1 f271 tooFarAhead
-c275 K=2 present=151 confirmed=2 remote=127 sent=153 held=124 refused=24 confirmedSum=10206201:2677114 settledSum=15235997:182687
+c275 K=2 present=127 confirmed=2 remote=127 sent=129 held=148 refused=24 confirmedSum=10206201:2677114 settledSum=15235997:182687
 c277 s1 f277 tooFarAhead
 c283 s1 f283 tooFarAhead
 c289 s1 f289 tooFarAhead
 c295 s1 f295 tooFarAhead
-c300 K=2 present=151 confirmed=2 remote=127 sent=153 held=149 refused=28 confirmedSum=10206201:2677114 settledSum=15235997:182687
+c300 K=2 present=127 confirmed=2 remote=127 sent=129 held=173 refused=28 confirmedSum=10206201:2677114 settledSum=15235997:182687
 c301 s1 f301 tooFarAhead
 c307 s1 f307 tooFarAhead
 c313 s1 f313 tooFarAhead
 c319 s1 f319 tooFarAhead
 c325 s1 f325 tooFarAhead
-c325 K=24 present=151 confirmed=24 remote=127 sent=153 held=174 refused=33 confirmedSum=8907404:5501125 settledSum=15235997:182687
+c325 K=24 present=149 confirmed=24 remote=127 sent=151 held=195 refused=33 confirmedSum=8907404:5501125 settledSum=15235997:182687
 c331 s1 f331 tooFarAhead
 c337 s1 f337 tooFarAhead
 c343 s1 f343 tooFarAhead
 c349 s1 f349 tooFarAhead
-c350 K=52 present=151 confirmed=52 remote=127 sent=153 held=199 refused=37 confirmedSum=6944451:8433449 settledSum=15235997:182687
+c350 K=52 present=151 confirmed=52 remote=127 sent=153 held=220 refused=37 confirmedSum=6944451:8433449 settledSum=15235997:182687
 c355 s1 f355 tooFarAhead
 c361 s1 f361 tooFarAhead
 c367 s1 f367 tooFarAhead
 c373 s1 f373 tooFarAhead
-c375 K=72 present=151 confirmed=72 remote=127 sent=153 held=224 refused=41 confirmedSum=7968672:10906708 settledSum=15235997:182687
+c375 K=72 present=151 confirmed=72 remote=127 sent=153 held=245 refused=41 confirmedSum=7968672:10906708 settledSum=15235997:182687
 c379 s1 f379 tooFarAhead
 c385 s1 f385 tooFarAhead
 c391 s1 f391 tooFarAhead
 c397 s1 f397 tooFarAhead
-c400 K=102 present=151 confirmed=102 remote=127 sent=153 held=249 refused=45 confirmedSum=10159414:6606254 settledSum=15235997:182687
+c400 K=102 present=151 confirmed=102 remote=127 sent=153 held=270 refused=45 confirmedSum=10159414:6606254 settledSum=15235997:182687
 c403 s1 f403 tooFarAhead
 c409 s1 f409 tooFarAhead
 c415 s1 f415 tooFarAhead
 receipts accepted=42 malformed=0 wrongSender=0 gone=0 outOfHistory=0 tooFarAhead=48 conflict=0
-rollbacks=21 deepest=5 firstLate=3 heldCallbacks=269 firstHold=152 stats rollbacks=21 deepest=5 held=269 messages=27 largest=16 refused=48 confirmed=120 confirmedSum=4956131:10112151
+rollbacks=21 deepest=5 firstLate=3 heldCallbacks=290 firstHold=128 stats rollbacks=21 deepest=5 held=290 messages=28 largest=16 refused=48 confirmed=120 confirmedSum=4956131:10112151

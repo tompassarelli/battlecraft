@@ -7,7 +7,7 @@ import { f32 } from "wisp/src/sim/f32";
 import { type Display, createDisplay, draw, noticeHits } from "./display";
 import { ABILITY_KEYS, KEY_METAS, MOVE_KEYS, type PlayerInput, aimAt, keyDown, playerInput, poll } from "./input";
 import { INPUT_CODEC, inputRow } from "./inputCodec";
-import { NET_SETTINGS, type Session, type Simulation, createSession, leave, predictedState, receive, tick } from "wisp/src/netcode/session";
+import { NET_SETTINGS, type Session, type Simulation, confirmedFrame, createSession, leave, predictedState, receive, tick } from "wisp/src/netcode/session";
 import { checksum } from "./sim/checksum";
 import type { InputRow } from "./sim/input";
 import { DUMMY, type SimState } from "./sim/state";
@@ -111,7 +111,7 @@ function armAimProbe(): void {
 function showChecksum(): void {
   const current = match();
   const session = current.session;
-  const line = `frame ${session.confirmedFrame} checksum ${checksum(session.confirmed)} dummy hits ${current.dummyHits.join(" ")}`;
+  const line = `frame ${confirmedFrame(session)} checksum ${checksum(session.confirmed)} dummy hits ${current.dummyHits.join(" ")}`;
   DisplayTextToForce(GetPlayersAll(), line);
   writeLine(`battlecraft-checksum-p${session.local}.txt`, line);
 }
