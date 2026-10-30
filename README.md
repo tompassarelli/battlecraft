@@ -39,7 +39,7 @@ ships it prebuilt. Set `LUA` to use one you built.
 the saved files' type errors, the affected tests and the headless journey;
 with `--data CUSTOM_MAP_DATA_DIR` each save also hot-reloads into a running
 game, and `--since REF` answers once for everything changed since REF and
-exits ([Wisp's dev loop](https://github.com/tompassarelli/wisp/blob/e1c75971c83df32f13712e3ad0ab7f2157ca5fa8/docs/dev.md)).
+exits ([Wisp's dev loop](https://github.com/tompassarelli/wisp/blob/2f22ceebf6f14e0a8a3b4f6a546c6d10a60fa291/docs/dev.md)).
 
 The Windows workflow (`.github/workflows/windows.yml`) is the gate for a
 Windows machine with only Bun and Git: on `windows-latest`, with gcc, make and
@@ -149,7 +149,7 @@ can be reused without opening World Editor again. Keep base maps, built maps
 and any game files out of this repository. On Windows Wisp ships its map packager
 prebuilt. Elsewhere the build compiles it on first use, which needs `nix` (or
 `STORMLIB_PREFIX` and `CC`); see
-Wisp's [editor-free guide](https://github.com/tompassarelli/wisp/blob/e1c75971c83df32f13712e3ad0ab7f2157ca5fa8/docs/editor-free.md).
+Wisp's [editor-free guide](https://github.com/tompassarelli/wisp/blob/2f22ceebf6f14e0a8a3b4f6a546c6d10a60fa291/docs/editor-free.md).
 
 ## Wisp version
 
