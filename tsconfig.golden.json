@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ES2015"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noEmitOnError": true,
+    "skipLibCheck": true,
+    "types": ["lua-types/5.3"],
+    "rootDir": ".",
+    "outDir": "build/golden"
+  },
+  "include": ["test/golden/lua.ts", "node_modules/wisp/src/natives/warcraft.d.ts"],
+  "tstl": {
+    "luaTarget": "5.3",
+    "luaBundle": "golden.lua",
+    "luaBundleEntry": "test/golden/lua.ts",
+    "noImplicitSelf": true,
+    "noHeader": true,
+    "luaPlugins": [{ "name": "./node_modules/wisp/plugins/warcraft-numbers.ts" }]
+  }
+}

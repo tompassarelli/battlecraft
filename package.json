@@ -6,7 +6,7 @@
   "packageManager": "bun@1.3.13",
   "scripts": {
     "postinstall": "bun node_modules/@effect/tsgo/dist/effect-tsgo.cjs patch --typescript --typescript-package typescript-native",
-    "check": "bun node_modules/typescript-native/bin/tsc --build tsconfig.json tsconfig.map.json tsconfig.tests.json tsconfig.headless.json --noEmit && bun node_modules/wisp/host/toolchain/numberRules.ts tsconfig.map.json tsconfig.tests.json tsconfig.headless.json",
+    "check": "bun node_modules/typescript-native/bin/tsc --build tsconfig.json tsconfig.map.json tsconfig.tests.json tsconfig.golden.json tsconfig.headless.json --noEmit && bun node_modules/wisp/host/toolchain/numberRules.ts tsconfig.map.json tsconfig.tests.json tsconfig.golden.json tsconfig.headless.json",
     "headless": "bun scripts/battlecraft.ts headless"
   },
   "devDependencies": {

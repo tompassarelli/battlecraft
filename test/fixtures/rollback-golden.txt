@@ -1,0 +1,556 @@
+scenario in-order seed=11 players=2 local=0 delay=2 window=24
+c7 rollback from=3 depth=4
+c13 rollback from=8 depth=5
+c19 rollback from=14 depth=5
+c25 rollback from=20 depth=5
+c25 K=20 present=25 confirmed=20 remote=25 sent=26 held=0 refused=0 confirmedSum=14976413:14419534 settledSum=5738437:15444408
+c31 rollback from=26 depth=5
+c37 rollback from=32 depth=5
+c43 rollback from=38 depth=5
+c49 rollback from=44 depth=5
+c50 K=46 present=50 confirmed=46 remote=49 sent=52 held=0 refused=0 confirmedSum=13672982:1887189 settledSum=8226697:10250634
+c55 rollback from=50 depth=5
+c61 rollback from=56 depth=5
+c67 rollback from=62 depth=5
+c73 rollback from=68 depth=5
+c75 K=73 present=75 confirmed=73 remote=73 sent=77 held=0 refused=0 confirmedSum=8429892:9491950 settledSum=8429892:9491950
+c79 rollback from=74 depth=5
+c85 rollback from=80 depth=5
+c91 rollback from=86 depth=5
+c97 rollback from=92 depth=5
+c100 K=97 present=100 confirmed=97 remote=97 sent=98 held=0 refused=0 confirmedSum=3153051:14393309 settledSum=3153051:14393309
+c103 rollback from=98 depth=5
+c109 rollback from=104 depth=5
+c115 rollback from=110 depth=5
+c121 rollback from=116 depth=5
+c125 K=121 present=125 confirmed=121 remote=121 sent=122 held=0 refused=0 confirmedSum=11683397:1995423 settledSum=11683397:1995423
+c127 rollback from=122 depth=5
+c133 rollback from=128 depth=5
+c139 rollback from=134 depth=5
+c145 rollback from=140 depth=5
+c150 K=145 present=150 confirmed=145 remote=145 sent=152 held=0 refused=0 confirmedSum=8653264:4708308 settledSum=8653264:4708308
+c151 rollback from=146 depth=5
+c157 rollback from=152 depth=5
+c163 rollback from=158 depth=5
+c169 rollback from=164 depth=5
+c175 rollback from=170 depth=5
+c175 K=170 present=175 confirmed=170 remote=175 sent=176 held=0 refused=0 confirmedSum=2240121:5983036 settledSum=14116904:8706110
+c181 rollback from=176 depth=5
+c187 rollback from=182 depth=5
+c193 rollback from=188 depth=5
+c199 rollback from=194 depth=5
+c200 K=198 present=200 confirmed=198 remote=199 sent=198 held=0 refused=0 confirmedSum=8703560:6133420 settledSum=11854867:5811823
+c205 rollback from=200 depth=5
+c211 rollback from=206 depth=5
+c217 rollback from=212 depth=5
+c223 rollback from=218 depth=5
+c225 K=223 present=225 confirmed=223 remote=223 sent=224 held=0 refused=0 confirmedSum=4032874:15783560 settledSum=4032874:15783560
+c229 rollback from=224 depth=5
+c235 rollback from=230 depth=5
+c241 rollback from=236 depth=5
+c247 rollback from=242 depth=5
+c250 K=247 present=250 confirmed=247 remote=247 sent=248 held=0 refused=0 confirmedSum=10389798:1857629 settledSum=10389798:1857629
+c253 rollback from=248 depth=5
+c259 rollback from=254 depth=5
+c265 rollback from=260 depth=5
+c271 rollback from=266 depth=5
+c275 K=271 present=275 confirmed=271 remote=271 sent=272 held=0 refused=0 confirmedSum=4796364:9502770 settledSum=4796364:9502770
+c277 rollback from=272 depth=5
+c283 rollback from=278 depth=5
+c289 rollback from=284 depth=5
+c295 rollback from=290 depth=5
+c300 K=295 present=300 confirmed=295 remote=295 sent=302 held=0 refused=0 confirmedSum=10271451:2285542 settledSum=10271451:2285542
+receipts accepted=99 malformed=0 wrongSender=0 gone=0 outOfHistory=0 tooFarAhead=0 conflict=0
+rollbacks=49 deepest=5 firstLate=3 heldCallbacks=0 firstHold=-1 stats rollbacks=49 deepest=5 held=0 messages=51 largest=20 refused=0 confirmed=295 confirmedSum=10271451:2285542
+scenario late-and-reordered seed=23 players=3 local=1 delay=2 window=24
+c20 rollback from=3 depth=17
+c21 rollback from=3 depth=18
+c25 K=6 present=25 confirmed=6 remote=6 sent=23 held=0 refused=0 confirmedSum=14571615:2789513 settledSum=14571615:2789513
+c32 rollback from=12 depth=19
+c33 rollback from=9 depth=22
+c35 rollback from=15 depth=20
+c41 rollback from=21 depth=20
+c43 rollback from=24 depth=19
+c44 rollback from=28 depth=16
+c45 rollback from=27 depth=18
+c48 rollback from=33 depth=15
+c50 K=32 present=50 confirmed=32 remote=32 sent=47 held=2 refused=0 confirmedSum=14703768:9281954 settledSum=14703768:9281954
+c55 rollback from=36 depth=19
+c61 rollback from=43 depth=18
+c62 rollback from=40 depth=21
+c65 rollback from=48 depth=13
+c66 rollback from=39 depth=22
+c73 rollback from=57 depth=16
+c74 rollback from=51 depth=22
+c75 rollback from=52 depth=23
+c75 K=54 present=75 confirmed=54 remote=54 sent=74 held=8 refused=0 confirmedSum=8577817:12956629 settledSum=8577817:12956629
+c80 rollback from=57 depth=22
+c84 rollback from=69 depth=15
+c93 rollback from=72 depth=21
+c97 rollback from=76 depth=21
+c100 K=72 present=96 confirmed=72 remote=72 sent=98 held=13 refused=0 confirmedSum=9290886:11430358 settledSum=9290886:11430358
+c101 rollback from=75 depth=22
+c108 rollback from=81 depth=22
+c112 rollback from=87 depth=22
+c113 rollback from=99 depth=14
+c114 rollback from=96 depth=18
+c115 rollback from=93 depth=22
+c117 rollback from=99 depth=18
+c122 rollback from=108 depth=14
+c124 rollback from=105 depth=19
+c125 K=108 present=125 confirmed=108 remote=108 sent=126 held=21 refused=0 confirmedSum=6660237:7345420 settledSum=6660237:7345420
+c132 rollback from=112 depth=20
+c136 rollback from=115 depth=18
+c137 rollback from=111 depth=22
+c139 rollback from=120 depth=19
+c141 rollback from=123 depth=18
+c144 rollback from=129 depth=15
+c145 rollback from=124 depth=21
+c148 rollback from=129 depth=19
+c150 K=132 present=150 confirmed=132 remote=132 sent=147 held=25 refused=0 confirmedSum=2934576:2287889 settledSum=2934576:2287889
+c153 rollback from=135 depth=18
+c158 rollback from=136 depth=22
+c162 rollback from=141 depth=21
+c164 rollback from=147 depth=17
+c165 rollback from=144 depth=21
+c170 rollback from=148 depth=22
+c173 rollback from=156 depth=17
+c175 K=150 present=174 confirmed=150 remote=150 sent=176 held=26 refused=0 confirmedSum=13100908:11184627 settledSum=13100908:11184627
+c176 rollback from=160 depth=15
+c177 rollback from=157 depth=18
+c179 rollback from=153 depth=22
+c189 rollback from=165 depth=22
+c195 rollback from=171 depth=22
+c196 rollback from=177 depth=19
+c198 rollback from=180 depth=18
+c200 K=180 present=200 confirmed=180 remote=180 sent=201 held=33 refused=0 confirmedSum=15038511:12551301 settledSum=15038511:12551301
+c201 rollback from=183 depth=18
+c202 rollback from=184 depth=18
+c203 rollback from=192 depth=11
+c208 rollback from=196 depth=12
+c215 rollback from=189 depth=22
+c216 rollback from=204 depth=12
+c222 rollback from=195 depth=22
+c223 rollback from=201 depth=22
+c225 K=204 present=225 confirmed=204 remote=204 sent=225 held=42 refused=0 confirmedSum=11687267:5455109 settledSum=11687267:5455109
+c226 rollback from=213 depth=13
+c227 rollback from=208 depth=19
+c229 rollback from=211 depth=18
+c230 rollback from=207 depth=22
+c234 rollback from=219 depth=15
+c235 rollback from=220 depth=15
+c243 rollback from=228 depth=15
+c247 rollback from=232 depth=15
+c250 rollback from=225 depth=22
+c250 K=234 present=250 confirmed=234 remote=234 sent=248 held=46 refused=0 confirmedSum=15343285:2098742 settledSum=15343285:2098742
+c252 rollback from=237 depth=15
+c259 rollback from=244 depth=15
+c269 rollback from=243 depth=22
+c270 rollback from=253 depth=17
+c271 rollback from=249 depth=22
+c273 rollback from=252 depth=21
+c275 rollback from=256 depth=19
+c275 K=258 present=275 confirmed=258 remote=258 sent=273 held=50 refused=0 confirmedSum=13093840:15788153 settledSum=13093840:15788153
+c282 rollback from=261 depth=21
+c283 rollback from=268 depth=15
+c284 rollback from=267 depth=17
+c288 rollback from=273 depth=15
+c295 rollback from=276 depth=19
+c299 rollback from=279 depth=20
+c300 K=282 present=300 confirmed=282 remote=282 sent=297 held=50 refused=0 confirmedSum=14144755:14498580 settledSum=14144755:14498580
+c304 rollback from=288 depth=16
+c309 rollback from=285 depth=22
+c310 rollback from=291 depth=19
+c312 rollback from=297 depth=15
+c315 rollback from=300 depth=15
+c319 rollback from=303 depth=16
+c320 rollback from=304 depth=16
+c324 rollback from=309 depth=15
+c325 K=308 present=325 confirmed=308 remote=308 sent=327 held=52 refused=0 confirmedSum=3031316:1529910 settledSum=3031316:1529910
+c330 rollback from=312 depth=18
+c333 rollback from=315 depth=18
+c335 rollback from=324 depth=11
+c336 rollback from=321 depth=15
+c349 rollback from=328 depth=21
+c350 K=324 present=348 confirmed=324 remote=324 sent=350 held=54 refused=0 confirmedSum=8278597:15386376 settledSum=8278597:15386376
+c351 rollback from=327 depth=22
+c355 rollback from=340 depth=15
+c360 rollback from=333 depth=22
+c362 rollback from=339 depth=22
+c367 rollback from=351 depth=16
+c369 rollback from=348 depth=21
+c371 rollback from=357 depth=14
+c372 rollback from=352 depth=20
+c375 rollback from=357 depth=18
+c375 K=360 present=375 confirmed=360 remote=360 sent=375 held=60 refused=0 confirmedSum=10917463:3207237 settledSum=10917463:3207237
+c385 rollback from=363 depth=22
+c391 rollback from=372 depth=19
+c393 rollback from=373 depth=18
+c394 rollback from=369 depth=22
+c400 rollback from=381 depth=19
+c400 K=380 present=400 confirmed=380 remote=380 sent=399 held=63 refused=0 confirmedSum=11309563:13278022 settledSum=11309563:13278022
+receipts accepted=211 malformed=0 wrongSender=0 gone=0 outOfHistory=0 tooFarAhead=0 conflict=0
+rollbacks=110 deepest=23 firstLate=3 heldCallbacks=63 firstHold=31 stats rollbacks=110 deepest=23 held=63 messages=68 largest=21 refused=0 confirmed=380 confirmedSum=11309563:13278022
+scenario faults-and-leave seed=37 players=3 local=2 delay=2 window=24
+c11 rollback from=7 depth=4
+c12 rollback from=3 depth=9
+c16 rollback from=12 depth=4
+c24 rollback from=14 depth=10
+c25 K=14 present=25 confirmed=14 remote=14 sent=25 held=0 refused=0 confirmedSum=7575141:1031505 settledSum=7575141:1031505
+c26 rollback from=16 depth=10
+c29 rollback from=21 depth=8
+c36 rollback from=28 depth=8
+c40 s0 past-limit tooFarAhead
+c40 s0 conflicting conflict
+c40 s7 stranger wrongSender
+c40 s0 garbage malformed
+c40 s0 empty malformed
+c45 rollback from=35 depth=10
+c46 rollback from=40 depth=6
+c50 K=37 present=50 confirmed=37 remote=37 sent=49 held=0 refused=4 confirmedSum=12296579:1744736 settledSum=12296579:1744736
+c52 rollback from=42 depth=10
+c56 rollback from=49 depth=7
+c57 rollback from=48 depth=9
+c58 rollback from=52 depth=6
+c67 rollback from=60 depth=7
+c68 rollback from=56 depth=12
+c70 rollback from=64 depth=6
+c71 s0 f71 conflict
+c75 rollback from=63 depth=12
+c75 K=67 present=75 confirmed=67 remote=67 sent=73 held=0 refused=5 confirmedSum=14416458:3957720 settledSum=14416458:3957720
+c78 rollback from=72 depth=6
+c79 s0 f79 conflict
+c79 rollback from=70 depth=9
+c80 s0 past-limit tooFarAhead
+c80 s0 conflicting conflict
+c80 s7 stranger wrongSender
+c80 s0 garbage malformed
+c80 s0 empty malformed
+c82 rollback from=76 depth=6
+c88 rollback from=77 depth=11
+c90 rollback from=84 depth=6
+c93 rollback from=84 depth=9
+c97 rollback from=88 depth=9
+c100 rollback from=91 depth=9
+c100 K=91 present=100 confirmed=91 remote=91 sent=100 held=0 refused=10 confirmedSum=3497359:5232320 settledSum=3497359:5232320
+c103 rollback from=96 depth=7
+c110 rollback from=98 depth=12
+c111 rollback from=100 depth=11
+c113 rollback from=105 depth=8
+c114 s1 f114 conflict
+c117 rollback from=108 depth=9
+c118 rollback from=112 depth=6
+c120 s0 past-limit tooFarAhead
+c120 s0 conflicting conflict
+c120 s7 stranger wrongSender
+c120 s0 garbage malformed
+c120 s0 empty malformed
+c120 rollback from=112 depth=8
+c125 K=115 present=125 confirmed=115 remote=115 sent=124 held=0 refused=15 confirmedSum=10035934:9791409 settledSum=10035934:9791409
+c128 rollback from=119 depth=9
+c131 rollback from=126 depth=5
+c133 rollback from=124 depth=9
+c137 rollback from=132 depth=5
+c140 rollback from=133 depth=7
+c144 rollback from=136 depth=8
+c145 s0 f145 conflict
+c149 rollback from=140 depth=9
+c150 K=145 present=150 confirmed=145 remote=145 sent=148 held=0 refused=16 confirmedSum=721471:14082565 settledSum=721471:14082565
+c156 rollback from=148 depth=8
+c159 rollback from=147 depth=12
+c160 s0 past-limit tooFarAhead
+c160 s0 out-of-history outOfHistory
+c160 s0 conflicting conflict
+c160 s7 stranger wrongSender
+c160 s0 garbage malformed
+c160 s0 empty malformed
+c160 rollback from=156 depth=4
+c166 rollback from=154 depth=12
+c169 rollback from=160 depth=9
+c172 rollback from=161 depth=11
+c174 rollback from=168 depth=6
+c175 rollback from=168 depth=7
+c175 K=169 present=175 confirmed=169 remote=169 sent=172 held=0 refused=21 confirmedSum=13817691:12952041 settledSum=13817691:12952041
+c176 s1 f176 conflict
+c181 rollback from=175 depth=6
+c182 rollback from=172 depth=10
+c186 rollback from=180 depth=6
+c192 rollback from=182 depth=10
+c197 rollback from=192 depth=5
+c200 s0 past-limit tooFarAhead
+c200 s0 out-of-history outOfHistory
+c200 s0 conflicting conflict
+c200 s7 stranger wrongSender
+c200 s0 garbage malformed
+c200 s0 empty malformed
+c200 K=187 present=200 confirmed=187 remote=187 sent=202 held=0 refused=27 confirmedSum=13927449:45242 settledSum=13927449:45242
+c201 rollback from=189 depth=12
+c206 rollback from=196 depth=10
+c207 rollback from=196 depth=11
+c209 rollback from=204 depth=5
+c212 rollback from=203 depth=9
+c218 rollback from=208 depth=10
+c220 rollback from=216 depth=4
+c222 rollback from=217 depth=5
+c225 K=217 present=225 confirmed=217 remote=217 sent=226 held=0 refused=27 confirmedSum=5348028:15527290 settledSum=5348028:15527290
+c229 rollback from=220 depth=9
+c232 rollback from=228 depth=4
+c235 rollback from=224 depth=11
+c240 s0 past-limit tooFarAhead
+c240 s0 out-of-history outOfHistory
+c240 s0 conflicting conflict
+c240 s7 stranger wrongSender
+c240 s0 garbage malformed
+c240 s0 empty malformed
+c241 rollback from=231 depth=10
+c246 rollback from=238 depth=8
+c247 rollback from=240 depth=7
+c248 s0 f248 conflict
+c250 leave p1 goneAfter=241 rollbackFrom=242
+c250 rollback from=242 depth=8
+c250 K=242 present=250 confirmed=242 remote=242 sent=250 held=0 refused=33 confirmedSum=2920645:2519830 settledSum=2920645:2519830
+c251 s1 f251 gone
+c252 rollback from=244 depth=8
+c260 rollback from=252 depth=8
+c264 rollback from=256 depth=8
+c269 rollback from=264 depth=5
+c274 rollback from=268 depth=6
+c275 K=272 present=275 confirmed=272 remote=272 sent=274 held=0 refused=34 confirmedSum=3206928:12548227 settledSum=3206928:12548227
+c280 s0 past-limit tooFarAhead
+c280 s0 out-of-history outOfHistory
+c280 s0 conflicting conflict
+c280 s7 stranger wrongSender
+c280 s0 garbage malformed
+c280 s0 empty malformed
+c281 rollback from=276 depth=5
+c288 rollback from=280 depth=8
+c297 rollback from=288 depth=9
+c298 s0 f298 conflict
+c300 K=290 present=300 confirmed=290 remote=290 sent=298 held=0 refused=40 confirmedSum=16334027:7065956 settledSum=16334027:7065956
+c301 rollback from=292 depth=9
+c308 rollback from=300 depth=8
+c315 rollback from=304 depth=11
+c320 s0 past-limit tooFarAhead
+c320 s0 out-of-history outOfHistory
+c320 s0 conflicting conflict
+c320 s7 stranger wrongSender
+c320 s0 garbage malformed
+c320 s0 empty malformed
+c320 rollback from=312 depth=8
+c323 rollback from=316 depth=7
+c325 K=320 present=325 confirmed=320 remote=320 sent=322 held=0 refused=45 confirmedSum=8704146:635473 settledSum=8704146:635473
+c330 rollback from=324 depth=6
+c335 rollback from=328 depth=7
+c344 rollback from=336 depth=8
+c348 rollback from=340 depth=8
+c350 K=344 present=350 confirmed=344 remote=344 sent=352 held=0 refused=45 confirmedSum=1214364:14227449 settledSum=1214364:14227449
+c354 rollback from=348 depth=6
+c360 s0 past-limit tooFarAhead
+c360 s0 out-of-history outOfHistory
+c360 s0 conflicting conflict
+c360 s7 stranger wrongSender
+c360 s0 garbage malformed
+c360 s0 empty malformed
+c360 rollback from=352 depth=8
+receipts accepted=188 malformed=18 wrongSender=9 gone=1 outOfHistory=6 tooFarAhead=9 conflict=16
+rollbacks=86 deepest=12 firstLate=7 heldCallbacks=0 firstHold=-1 stats rollbacks=86 deepest=12 held=0 messages=61 largest=17 refused=50 confirmed=355 confirmedSum=11064301:2263371
+scenario session-restart seed=47 players=2 local=0 delay=2 window=24
+c25 rollback from=3 depth=22
+c25 K=7 present=25 confirmed=7 remote=7 sent=26 held=0 refused=0 confirmedSum=6988739:16723189 settledSum=6988739:16723189
+c33 rollback from=9 depth=23
+c42 rollback from=15 depth=23
+c45 rollback from=21 depth=23
+c50 K=25 present=49 confirmed=25 remote=25 sent=47 held=7 refused=0 confirmedSum=15271807:4553809 settledSum=15271807:4553809
+c53 rollback from=27 depth=23
+c56 rollback from=33 depth=23
+c67 rollback from=39 depth=23
+c75 rollback from=51 depth=23
+c75 K=55 present=75 confirmed=55 remote=55 sent=74 held=15 refused=0 confirmedSum=4981399:1055306 settledSum=4981399:1055306
+c85 rollback from=57 depth=23
+c90 rollback from=63 depth=23
+c97 rollback from=69 depth=23
+c99 rollback from=75 depth=23
+c100 K=79 present=100 confirmed=79 remote=79 sent=93 held=30 refused=0 confirmedSum=8879845:16236711 settledSum=8879845:16236711
+c108 rollback from=81 depth=23
+c109 rollback from=87 depth=22
+c115 rollback from=93 depth=22
+c125 K=97 present=121 confirmed=97 remote=97 sent=122 held=38 refused=0 confirmedSum=2353140:4160320 settledSum=2353140:4160320
+c126 rollback from=99 depth=23
+c130 rollback from=105 depth=23
+c133 rollback from=111 depth=22
+c140 rollback from=117 depth=23
+c148 rollback from=123 depth=23
+c150 restart a new session; its wire carries no epoch, so rows still in flight from the old one reach it
+c150 K=2 present=1 confirmed=2 remote=2 sent=2 held=0 refused=0 confirmedSum=10206201:2677114 settledSum=10579831:11140517
+c152 s1 f152 tooFarAhead
+c163 s1 f163 tooFarAhead
+c169 s1 f169 tooFarAhead
+c174 s1 f174 tooFarAhead
+c175 K=2 present=26 confirmed=2 remote=2 sent=26 held=0 refused=4 confirmedSum=10206201:2677114 settledSum=10206201:2677114
+c177 s1 f177 tooFarAhead
+c181 rollback from=3 depth=24
+c191 s1 f191 tooFarAhead
+c194 s1 f194 tooFarAhead
+c197 s1 f197 tooFarAhead
+c199 s1 f199 tooFarAhead
+c200 s1 f200 tooFarAhead
+c200 K=46 present=51 confirmed=46 remote=130 sent=52 held=5 refused=10 confirmedSum=8850253:2114991 settledSum=15596566:13363210
+c205 s1 f205 tooFarAhead
+c208 s1 f208 tooFarAhead
+c212 s1 f212 tooFarAhead
+c222 s1 f222 tooFarAhead
+c225 K=70 present=76 confirmed=70 remote=130 sent=76 held=5 refused=14 confirmedSum=3650328:7026162 settledSum=11463463:9877819
+c228 s1 f228 tooFarAhead
+c235 s1 f235 tooFarAhead
+c236 s1 f236 tooFarAhead
+c244 s1 f244 tooFarAhead
+c249 s1 f249 tooFarAhead
+c250 K=100 present=101 confirmed=100 remote=130 sent=100 held=5 refused=19 confirmedSum=2945415:552677 settledSum=10439527:5316332
+c255 s1 f255 tooFarAhead
+c258 s1 f258 tooFarAhead
+c260 s1 f260 tooFarAhead
+c271 s1 f271 tooFarAhead
+c273 s1 f273 tooFarAhead
+c275 K=122 present=126 confirmed=122 remote=130 sent=128 held=5 refused=24 confirmedSum=4459510:5290497 settledSum=7032257:6580122
+c276 s1 f276 tooFarAhead
+c279 s1 f279 tooFarAhead
+c287 s1 f287 tooFarAhead
+c291 s1 f291 tooFarAhead
+c298 s1 f298 tooFarAhead
+c300 K=130 present=151 confirmed=130 remote=130 sent=152 held=5 refused=29 confirmedSum=3745498:12344046 settledSum=3745498:12344046
+receipts accepted=74 malformed=0 wrongSender=0 gone=0 outOfHistory=0 tooFarAhead=29 conflict=0
+rollbacks=21 deepest=24 firstLate=3 heldCallbacks=47 firstHold=32 stats rollbacks=1 deepest=24 held=5 messages=26 largest=18 refused=29 confirmed=130 confirmedSum=3745498:12344046
+scenario window-held seed=41 players=2 local=0 delay=2 window=24
+c25 K=2 present=25 confirmed=2 remote=2 sent=27 held=0 refused=0 confirmedSum=10206201:2677114 settledSum=10206201:2677114
+c50 K=2 present=26 confirmed=2 remote=2 sent=28 held=24 refused=0 confirmedSum=10206201:2677114 settledSum=10206201:2677114
+c65 rollback from=3 depth=24
+c72 rollback from=8 depth=24
+c75 K=13 present=37 confirmed=13 remote=13 sent=39 held=48 refused=0 confirmedSum=9317162:613438 settledSum=9317162:613438
+c78 rollback from=16 depth=22
+c84 rollback from=20 depth=24
+c91 rollback from=28 depth=22
+c98 rollback from=32 depth=24
+c100 K=37 present=61 confirmed=37 remote=37 sent=63 held=69 refused=0 confirmedSum=12294094:8751756 settledSum=12294094:8751756
+c102 rollback from=40 depth=22
+c109 rollback from=44 depth=24
+c115 rollback from=52 depth=22
+c121 rollback from=56 depth=24
+c125 rollback from=64 depth=22
+c125 K=67 present=91 confirmed=67 remote=67 sent=87 held=89 refused=0 confirmedSum=4498853:11107875 settledSum=4498853:11107875
+c131 rollback from=68 depth=24
+c140 rollback from=76 depth=22
+c144 rollback from=80 depth=24
+c149 rollback from=88 depth=22
+c150 K=91 present=115 confirmed=91 remote=91 sent=117 held=110 refused=0 confirmedSum=4946780:15916449 settledSum=4946780:15916449
+c157 rollback from=92 depth=24
+c162 rollback from=100 depth=22
+c168 rollback from=104 depth=24
+c175 K=109 present=133 confirmed=109 remote=109 sent=135 held=132 refused=0 confirmedSum=16524461:16399091 settledSum=16524461:16399091
+c176 rollback from=112 depth=22
+c181 rollback from=116 depth=24
+c185 rollback from=124 depth=22
+c193 rollback from=128 depth=24
+c197 rollback from=136 depth=22
+c200 K=139 present=163 confirmed=139 remote=139 sent=165 held=152 refused=0 confirmedSum=9294605:4374641 settledSum=9294605:4374641
+c206 rollback from=140 depth=24
+c209 rollback from=148 depth=22
+c215 rollback from=152 depth=24
+c223 rollback from=160 depth=22
+c225 K=163 present=187 confirmed=163 remote=163 sent=189 held=173 refused=0 confirmedSum=8446754:1696697 settledSum=8446754:1696697
+c229 rollback from=164 depth=24
+c234 rollback from=172 depth=22
+c241 rollback from=176 depth=24
+c247 rollback from=184 depth=22
+c250 K=187 present=211 confirmed=187 remote=187 sent=213 held=194 refused=0 confirmedSum=7588505:6493451 settledSum=7588505:6493451
+c251 rollback from=188 depth=24
+c259 rollback from=196 depth=22
+receipts accepted=77 malformed=0 wrongSender=0 gone=0 outOfHistory=0 tooFarAhead=0 conflict=0
+rollbacks=33 deepest=24 firstLate=3 heldCallbacks=202 firstHold=27 stats rollbacks=33 deepest=24 held=202 messages=39 largest=13 refused=0 confirmed=199 confirmedSum=3570148:6372355
+scenario late-echo-stall seed=53 players=2 local=0 delay=2 window=24
+c7 rollback from=3 depth=4
+c13 rollback from=8 depth=5
+c19 rollback from=14 depth=5
+c25 rollback from=20 depth=5
+c25 K=2 present=25 confirmed=2 remote=25 sent=24 held=0 refused=0 confirmedSum=10206201:2677114 settledSum=5759945:16643311
+c31 rollback from=26 depth=5
+c37 rollback from=32 depth=5
+c43 rollback from=38 depth=5
+c49 rollback from=44 depth=5
+c50 K=2 present=50 confirmed=2 remote=49 sent=52 held=0 refused=0 confirmedSum=10206201:2677114 settledSum=5880635:14193061
+c55 rollback from=50 depth=5
+c61 rollback from=56 depth=5
+c67 rollback from=62 depth=5
+c73 rollback from=68 depth=5
+c75 K=2 present=75 confirmed=2 remote=73 sent=72 held=0 refused=0 confirmedSum=10206201:2677114 settledSum=11735368:7700682
+c79 rollback from=74 depth=5
+c85 rollback from=80 depth=5
+c91 rollback from=86 depth=5
+c97 rollback from=92 depth=5
+c100 K=2 present=100 confirmed=2 remote=97 sent=102 held=0 refused=0 confirmedSum=10206201:2677114 settledSum=11857739:16372580
+c103 rollback from=98 depth=5
+c109 rollback from=104 depth=5
+c115 rollback from=110 depth=5
+c121 rollback from=116 depth=5
+c125 K=2 present=125 confirmed=2 remote=121 sent=126 held=0 refused=0 confirmedSum=10206201:2677114 settledSum=15196777:8391939
+c127 rollback from=122 depth=5
+c133 s1 f133 tooFarAhead
+c139 s1 f139 tooFarAhead
+c145 s1 f145 tooFarAhead
+c150 K=2 present=150 confirmed=2 remote=127 sent=150 held=0 refused=3 confirmedSum=10206201:2677114 settledSum=15235997:182687
+c151 s1 f151 tooFarAhead
+c157 s1 f157 tooFarAhead
+c163 s1 f163 tooFarAhead
+c169 s1 f169 tooFarAhead
+c175 s1 f175 tooFarAhead
+c175 K=2 present=151 confirmed=2 remote=127 sent=153 held=24 refused=8 confirmedSum=10206201:2677114 settledSum=15235997:182687
+c181 s1 f181 tooFarAhead
+c187 s1 f187 tooFarAhead
+c193 s1 f193 tooFarAhead
+c199 s1 f199 tooFarAhead
+c200 K=2 present=151 confirmed=2 remote=127 sent=153 held=49 refused=12 confirmedSum=10206201:2677114 settledSum=15235997:182687
+c205 s1 f205 tooFarAhead
+c211 s1 f211 tooFarAhead
+c217 s1 f217 tooFarAhead
+c223 s1 f223 tooFarAhead
+c225 K=2 present=151 confirmed=2 remote=127 sent=153 held=74 refused=16 confirmedSum=10206201:2677114 settledSum=15235997:182687
+c229 s1 f229 tooFarAhead
+c235 s1 f235 tooFarAhead
+c241 s1 f241 tooFarAhead
+c247 s1 f247 tooFarAhead
+c250 K=2 present=151 confirmed=2 remote=127 sent=153 held=99 refused=20 confirmedSum=10206201:2677114 settledSum=15235997:182687
+c253 s1 f253 tooFarAhead
+c259 s1 f259 tooFarAhead
+c265 s1 f265 tooFarAhead
+c271 s1 f271 tooFarAhead
+c275 K=2 present=151 confirmed=2 remote=127 sent=153 held=124 refused=24 confirmedSum=10206201:2677114 settledSum=15235997:182687
+c277 s1 f277 tooFarAhead
+c283 s1 f283 tooFarAhead
+c289 s1 f289 tooFarAhead
+c295 s1 f295 tooFarAhead
+c300 K=2 present=151 confirmed=2 remote=127 sent=153 held=149 refused=28 confirmedSum=10206201:2677114 settledSum=15235997:182687
+c301 s1 f301 tooFarAhead
+c307 s1 f307 tooFarAhead
+c313 s1 f313 tooFarAhead
+c319 s1 f319 tooFarAhead
+c325 s1 f325 tooFarAhead
+c325 K=24 present=151 confirmed=24 remote=127 sent=153 held=174 refused=33 confirmedSum=8907404:5501125 settledSum=15235997:182687
+c331 s1 f331 tooFarAhead
+c337 s1 f337 tooFarAhead
+c343 s1 f343 tooFarAhead
+c349 s1 f349 tooFarAhead
+c350 K=52 present=151 confirmed=52 remote=127 sent=153 held=199 refused=37 confirmedSum=6944451:8433449 settledSum=15235997:182687
+c355 s1 f355 tooFarAhead
+c361 s1 f361 tooFarAhead
+c367 s1 f367 tooFarAhead
+c373 s1 f373 tooFarAhead
+c375 K=72 present=151 confirmed=72 remote=127 sent=153 held=224 refused=41 confirmedSum=7968672:10906708 settledSum=15235997:182687
+c379 s1 f379 tooFarAhead
+c385 s1 f385 tooFarAhead
+c391 s1 f391 tooFarAhead
+c397 s1 f397 tooFarAhead
+c400 K=102 present=151 confirmed=102 remote=127 sent=153 held=249 refused=45 confirmedSum=10159414:6606254 settledSum=15235997:182687
+c403 s1 f403 tooFarAhead
+c409 s1 f409 tooFarAhead
+c415 s1 f415 tooFarAhead
+receipts accepted=42 malformed=0 wrongSender=0 gone=0 outOfHistory=0 tooFarAhead=48 conflict=0
+rollbacks=21 deepest=5 firstLate=3 heldCallbacks=269 firstHold=152 stats rollbacks=21 deepest=5 held=269 messages=27 largest=16 refused=48 confirmed=120 confirmedSum=4956131:10112151
