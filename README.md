@@ -3,7 +3,7 @@
 A starter arena brawler in the style of Bloodline Champions and Battlerite for
 Warcraft III, built on [Wisp](https://github.com/tompassarelli/wisp) and the
 input and rollback lessons from
-[Smashcraft](https://github.com/tompassarelli/smashcraft).
+[Mak'gora](https://github.com/tompassarelli/makgora).
 
 New to Warcraft III maps and on Windows? Start with
 [Getting started on Windows](docs/getting-started-windows.md): it takes you
